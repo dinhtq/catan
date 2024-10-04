@@ -37,132 +37,98 @@ const gridItems = [
   },
 ];
 
-const getGrid = () => {
-  const grid = Array.from({ length: ROWS }).map((val, rowIndex) => {
-    const columns = Array.from({ length: COLS }).map((_, colInd) => colInd);
-    return columns;
+const getInitialPiece = () => {
+  return [
+    "wood",
+    "brick",
+    "sheep",
+    "wheat", // row 1, idx 3
+    "ore",
+    "wood",
+    "brick",
+    "sheep", // row 2, idx 7
+    "wheat",
+    "ore",
+    "wood",
+    "brick",
+    "sheep", // row 3, idx 12
+    "wheat",
+    "ore",
+    "wood", // row 4, 15
+    "brick",
+    "sheep",
+    "robber",
+  ];
+};
+
+const getGrid = (pieces) => {
+  const row1 = []; // len 3
+  const row2 = []; // len 4
+  const row3 = []; // len 5
+  const row4 = []; // len 4
+  const row5 = []; // len 3
+
+  pieces.forEach((piece, idx) => {
+    if (idx < 3) {
+      row1.push(piece);
+    } else if (idx < 7) {
+      row2.push(piece);
+    } else if (idx < 12) {
+      row3.push(piece);
+    } else if (idx < 16) {
+      row4.push(piece);
+    } else {
+      row5.push(piece);
+    }
   });
-  console.log(grid);
+  const grid = {
+    row1,
+    row2,
+    row3,
+    row4,
+    row5,
+  };
+
   return grid;
 };
 
-function shuffle(array) {
-  let currentIndex = array.length;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-    // Pick a remaining element...
-    let randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-}
-
-function assignCatanResources(pieces) {
-  if (pieces.length !== 19) {
-    throw new Error("The pieces array must have exactly 19 items.");
-  }
-
-  // Define the structure of the 2D array (5x5)
-  const grid = [
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-  ];
-
-  // Predefined positions for where resources will go (19 positions in a hexagonal grid-like format)
-  const positions = [
-    [0, 2],
-    [1, 1],
-    [1, 2],
-    [1, 3],
-    [2, 0],
-    [2, 1],
-    [2, 2],
-    [2, 3],
-    [2, 4],
-    [3, 1],
-    [3, 2],
-    [3, 3],
-    [4, 2],
-  ];
-
-  // Shuffle the pieces array to randomize assignment
-  const shuffledPieces = shuffle(positions);
-  console.log("shuffledPieces", shuffledPieces);
-
-  // Assign each piece to the predefined positions
-  for (let i = 0; i < shuffledPieces.length; i++) {
-    const position = positions[i];
-    grid[position[0]][position[1]] = {
-      resource: shuffledPieces[i],
-      position: position,
-    };
-  }
-
-  return grid;
-}
-
-const pieces = [
-  "wood",
-  "brick",
-  "sheep",
-  "wheat",
-  "ore",
-  "wood",
-  "brick",
-  "sheep",
-  "wheat",
-  "ore",
-  "wood",
-  "brick",
-  "sheep",
-  "wheat",
-  "ore",
-  "wood",
-  "brick",
-  "sheep",
-  "robber",
-];
-
 // const result = assignCatanResources(pieces);
-// console.log(result);
+// console.log('pieces length', pieces.length);
+
+function ResourceItem({ resource }) {
+  return <div>{resource}</div>;
+}
 
 export default function App() {
+  const grid = getGrid(getInitialPiece());
+
   const TILES_COUNT = 19;
   return (
     <div className="App">
       <div className="main">
         <div className="container row-1">
-          {Array.from({ length: 3 }).map(() => (
-            <div />
+          {grid.row1.map((r, idx) => (
+            <ResourceItem key={`row-1-col-${idx}`} resource={r} />
           ))}
         </div>
         <div className="container">
-          {Array.from({ length: 4 }).map(() => (
-            <div />
+          {grid.row2.map((r, idx) => (
+            <ResourceItem key={`row-2-col-${idx}`} resource={r} />
           ))}
         </div>
         <div className="container">
-          {Array.from({ length: 5 }).map(() => (
-            <div />
+          {grid.row3.map((r, idx) => (
+            <ResourceItem key={`row-3-col-${idx}`} resource={r} />
           ))}
         </div>
         <div className="container row-1">
-          {Array.from({ length: 4 }).map(() => (
-            <div />
+          {grid.row4.map((r, idx) => (
+            <ResourceItem key={`row-4-col-${idx}`} resource={r} />
           ))}
         </div>
         <div className="container">
-          {Array.from({ length: 3 }).map(() => (
-            <div />
+          {grid.row5.map((r, idx) => (
+            <ResourceItem key={`row-5-col-${idx}`} resource={r} />
           ))}
         </div>
       </div>
