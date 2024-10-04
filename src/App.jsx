@@ -5,43 +5,63 @@ import { cloneDeep, shuffle } from "lodash-es";
 const ROWS = 5;
 const COLS = 5;
 
-const gridItems = [
-  {
-    type: "wood",
-    count: 4,
-    bgColor: "#228B22",
-  },
-  {
-    type: "sheep",
-    count: 4,
-    bgColor: "#2ecc71",
-  },
-  {
-    type: "brick",
-    count: 3,
-    bgColor: "#e67e22",
-  },
-  {
-    type: "ore",
-    count: 3,
-    bgColor: "#9b59b6",
-  },
-  {
-    type: "wheat",
-    count: 4,
-    bgColor: "#f1c40f",
-  },
-  {
-    type: "robber",
-    count: 1,
-    bgColor: "grey",
-  },
-];
+const TOTAL_PIECES = 19
+
+const COLORS = {
+  RESOURCES: {
+    wood: '#1b5e20', // deep green
+    brick: '#f44336', // red
+    sheep: '#cddc39', // lime
+    ore: '#673ab7', // purple
+    wheat: '#ffeb3b', // yellow
+    robber: '#9e9e9e',
+  }
+}
+
+const getPiece = ({ resourceType }) => {
+  return {
+    resourceType,
+    color:  COLORS.RESOURCES[resourceType]
+  }
+}
+
+const piceTypes = {
+  wood: 'wood',
+  brick: 'brick',
+  sheep: 'sheep',
+  ore: 'ore',
+  wheat: 'wheat',
+  robber: 'robber',
+
+}
 
 const getInitialPieces = () => {
+  const count = {
+    wood: 4,
+    brick: 3,
+    sheep: 4,
+    ore: 3,
+    wheat: 4,
+    robber: 1
+  }
+
+  const pieces = []
+  
+
+  Object.keys(count).forEach((resourceTypeKey) => {
+    const resourceCount = count[resourceTypeKey]
+    for(let i = 0; i< resourceCount; i++) {
+      const piece = getPiece({ resourceType: resourceTypeKey })
+      pieces.push(piece)
+    }
+  })
+  console.log('pieces', pieces)
+  const piecesShuffled = shuffle(pieces)
+  console.log('piecesShuffled', piecesShuffled)
+
   return [
-    "wood",
-    "brick",
+    'wood',
+    'brick',
     "sheep",
     "wheat", // row 1, idx 3
     "ore",
