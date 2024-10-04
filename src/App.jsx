@@ -93,25 +93,31 @@ const getGrid = (pieces) => {
   return grid;
 };
 
-// const result = assignCatanResources(pieces);
-// console.log('pieces length', pieces.length);
-
 function ResourceItem({ resource }) {
   const { resourceType, color } = resource
-  console.log('reosuceType', resourceType)
-  console.log('color', color)
+  // console.log('reosuceType', resourceType)
+  // console.log('color', color)
   return <div style={{ backgroundColor: color }}>{resourceType}</div>;
 }
 
 export default function App() {
-  const resources = getInitialPieces()
+  const [resources, setResources] = useState(getInitialPieces())
 
   const grid = useMemo(() => {
     return getGrid(resources)
   }, [resources])
 
+  const onShuffle = () => {
+    setResources((prevResources) => {
+      const prevResourcesCopy = cloneDeep(prevResources)
+      const shuffled = shuffle(prevResourcesCopy)
+      return shuffled
+    })
+  }
+
   return (
     <div className="App">
+      <div onClick={onShuffle}><button>shuffle</button></div>
       <div className="main">
         <div className="container row-1">
           {grid.row1.map((r, idx) => (
