@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
+import { cloneDeep, shuffle } from "lodash-es";
 
 const ROWS = 5;
 const COLS = 5;
@@ -37,7 +38,7 @@ const gridItems = [
   },
 ];
 
-const getInitialPiece = () => {
+const getInitialPieces = () => {
   return [
     "wood",
     "brick",
@@ -100,9 +101,12 @@ function ResourceItem({ resource }) {
 }
 
 export default function App() {
-  const grid = getGrid(getInitialPiece());
+  const resources = getInitialPieces()
 
-  const TILES_COUNT = 19;
+  const grid = useMemo(() => {
+    return getGrid(resources)
+  }, [resources])
+
   return (
     <div className="App">
       <div className="main">
