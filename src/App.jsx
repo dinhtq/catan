@@ -1,39 +1,40 @@
 import { useMemo, useState } from "react";
 import "./App.css";
 import { cloneDeep, shuffle } from "lodash-es";
+import { TransitionGroup } from "react-transition-group";
+import { Box, Button } from "@mui/material";
 
 const ROWS = 5;
 const COLS = 5;
 
-const TOTAL_PIECES = 19
+const TOTAL_PIECES = 19;
 
 const COLORS = {
   RESOURCES: {
-    wood: '#1b5e20', // deep green
-    brick: '#f44336', // red
-    sheep: '#8bc34a', // lime
-    ore: '#673ab7', // purple
-    wheat: '#ffeb3b', // yellow
-    robber: '#9e9e9e',
-  }
-}
+    wood: "#1b5e20", // deep green
+    brick: "#f44336", // red
+    sheep: "#8bc34a", // lime
+    ore: "#673ab7", // purple
+    wheat: "#ffeb3b", // yellow
+    robber: "#9e9e9e",
+  },
+};
 
 const getPiece = ({ resourceType }) => {
   return {
     resourceType,
-    color:  COLORS.RESOURCES[resourceType]
-  }
-}
+    color: COLORS.RESOURCES[resourceType],
+  };
+};
 
 const piceTypes = {
-  wood: 'wood',
-  brick: 'brick',
-  sheep: 'sheep',
-  ore: 'ore',
-  wheat: 'wheat',
-  robber: 'robber',
-
-}
+  wood: "wood",
+  brick: "brick",
+  sheep: "sheep",
+  ore: "ore",
+  wheat: "wheat",
+  robber: "robber",
+};
 
 const getInitialPieces = () => {
   const count = {
@@ -42,24 +43,23 @@ const getInitialPieces = () => {
     sheep: 4,
     ore: 3,
     wheat: 4,
-    robber: 1
-  }
+    robber: 1,
+  };
 
-  const pieces = []
-  
+  const pieces = [];
 
   Object.keys(count).forEach((resourceTypeKey) => {
-    const resourceCount = count[resourceTypeKey]
-    for(let i = 0; i< resourceCount; i++) {
-      const piece = getPiece({ resourceType: resourceTypeKey })
-      pieces.push(piece)
+    const resourceCount = count[resourceTypeKey];
+    for (let i = 0; i < resourceCount; i++) {
+      const piece = getPiece({ resourceType: resourceTypeKey });
+      pieces.push(piece);
     }
-  })
-  console.log('pieces', pieces)
-  const piecesShuffled = shuffle(pieces)
-  console.log('piecesShuffled', piecesShuffled)
+  });
+  console.log("pieces", pieces);
+  const piecesShuffled = shuffle(pieces);
+  console.log("piecesShuffled", piecesShuffled);
 
-  return piecesShuffled
+  return piecesShuffled;
 };
 
 const getGrid = (pieces) => {
@@ -94,30 +94,32 @@ const getGrid = (pieces) => {
 };
 
 function ResourceItem({ resource }) {
-  const { resourceType, color } = resource
+  const { resourceType, color } = resource;
   // console.log('reosuceType', resourceType)
   // console.log('color', color)
   return <div style={{ backgroundColor: color }}>{resourceType}</div>;
 }
 
 export default function App() {
-  const [resources, setResources] = useState(getInitialPieces())
+  const [resources, setResources] = useState(getInitialPieces());
 
   const grid = useMemo(() => {
-    return getGrid(resources)
-  }, [resources])
+    return getGrid(resources);
+  }, [resources]);
 
   const onShuffle = () => {
     setResources((prevResources) => {
-      const prevResourcesCopy = cloneDeep(prevResources)
-      const shuffled = shuffle(prevResourcesCopy)
-      return shuffled
-    })
-  }
+      const prevResourcesCopy = cloneDeep(prevResources);
+      const shuffled = shuffle(prevResourcesCopy);
+      return shuffled;
+    });
+  };
 
   return (
-    <div className="App">
-      <div onClick={onShuffle}><button>shuffle</button></div>
+    <Box>
+      <Box sx={{ position: "absolute", left: 20, top: 20 }}>
+        <Button variant="contained" onClick={onShuffle}>shuffle</Button>
+      </Box>
       <div className="main">
         <div className="container row-1">
           {grid.row1.map((r, idx) => (
@@ -145,6 +147,6 @@ export default function App() {
           ))}
         </div>
       </div>
-    </div>
+    </Box>
   );
 }

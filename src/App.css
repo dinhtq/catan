@@ -8,6 +8,12 @@ html {
   --s: 100px; /* size  */
   --m: 4px; /* margin */
   --f: calc(1.732 * var(--s) + 4 * var(--m) - 1px);
+  --colorWood: '#1b5e20';
+  --colorBrick: '#f44336';
+  --colorSheep: '#8bc34a';
+  --colorOre: '#673ab7';
+  --colorWheat: '#ffeb3b';
+  --colorRobber: '#9e9e9e';
   /* border: 1px solid blue; */
 }
 
@@ -28,13 +34,10 @@ html {
   /* background: red; */
   margin-bottom: calc(var(--m) - var(--s) * 0.2885);
 }
-.container div:first-child {
-  /* background: cyan !important; */
-  clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+.container div.wood {
+  background-color: var(--colorWood);
 }
-/* .container div:nth-child(odd) {
-  background: green;
-} */
+
 .container::before {
   content: "";
   width: calc(var(--s) / 2 + var(--m));
