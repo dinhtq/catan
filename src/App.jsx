@@ -11,7 +11,7 @@ const COLORS = {
   RESOURCES: {
     wood: '#1b5e20', // deep green
     brick: '#f44336', // red
-    sheep: '#cddc39', // lime
+    sheep: '#8bc34a', // lime
     ore: '#673ab7', // purple
     wheat: '#ffeb3b', // yellow
     robber: '#9e9e9e',
@@ -59,27 +59,7 @@ const getInitialPieces = () => {
   const piecesShuffled = shuffle(pieces)
   console.log('piecesShuffled', piecesShuffled)
 
-  return [
-    'wood',
-    'brick',
-    "sheep",
-    "wheat", // row 1, idx 3
-    "ore",
-    "wood",
-    "brick",
-    "sheep", // row 2, idx 7
-    "wheat",
-    "ore",
-    "wood",
-    "brick",
-    "sheep", // row 3, idx 12
-    "wheat",
-    "ore",
-    "wood", // row 4, 15
-    "brick",
-    "sheep",
-    "robber",
-  ];
+  return piecesShuffled
 };
 
 const getGrid = (pieces) => {
@@ -117,7 +97,10 @@ const getGrid = (pieces) => {
 // console.log('pieces length', pieces.length);
 
 function ResourceItem({ resource }) {
-  return <div>{resource}</div>;
+  const { resourceType, color } = resource
+  console.log('reosuceType', resourceType)
+  console.log('color', color)
+  return <div style={{ backgroundColor: color }}>{resourceType}</div>;
 }
 
 export default function App() {
