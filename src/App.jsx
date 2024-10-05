@@ -92,15 +92,20 @@ const getGrid = (pieces) => {
   return grid
 }
 
-function ResourceItem({ resource }) {
+function ResourceItem({ resource, rowId, colId }) {
   const { resourceType, color } = resource
-  // console.log('reosuceType', resourceType)
-  // console.log('color', color)
+
   const onCenterClicked = () => {
-    console.log('onCenterClicked', onCenterClicked)
+    console.log(
+      'onCenterClicked',
+      `row ${rowId}, col ${colId}, resource ${resourceType}`,
+    )
   }
   const onCornerClicked = () => {
-    console.log('onCornerClicked', onCornerClicked)
+    console.log(
+      'onCornerClicked',
+      `row ${rowId}, col ${colId}, resource ${resourceType}`,
+    )
   }
   return (
     <Box
@@ -165,42 +170,52 @@ export default function App() {
       <div className="main">
         <div className="container row-1">
           {grid.row1.map((r, idx) => (
-            <ResourceItem key={`row-1-col-${idx}`} resource={r} />
+            <ResourceItem
+              key={`row-1-col-${idx}`}
+              resource={r}
+              rowId={1}
+              colId={idx}
+            />
           ))}
-          {/* {
-            grid.row1.map((r, idx) => <Box key={`row-1-col-${idx}-box=${idx}`} sx={{ position: 'absolute', width: 20, height: 20, backgroundColor: 'white', clipPath: 'none', left: 0, top: 0 }} />)
-          } */}
-          <Box
-            className="placement-area"
-            sx={{
-              position: 'absolute',
-              width: `5`,
-              height: 5,
-              backgroundColor: 'white',
-              clipPath: 'none',
-              left: 0,
-              top: 0,
-            }}
-          />
         </div>
         <div className="container">
           {grid.row2.map((r, idx) => (
-            <ResourceItem key={`row-2-col-${idx}`} resource={r} />
+            <ResourceItem
+              key={`row-2-col-${idx}`}
+              resource={r}
+              rowId={2}
+              colId={idx}
+            />
           ))}
         </div>
         <div className="container">
           {grid.row3.map((r, idx) => (
-            <ResourceItem key={`row-3-col-${idx}`} resource={r} />
+            <ResourceItem
+              key={`row-3-col-${idx}`}
+              resource={r}
+              rowId={3}
+              colId={idx}
+            />
           ))}
         </div>
         <div className="container row-1">
           {grid.row4.map((r, idx) => (
-            <ResourceItem key={`row-4-col-${idx}`} resource={r} />
+            <ResourceItem
+              key={`row-4-col-${idx}`}
+              resource={r}
+              rowId={4}
+              colId={idx}
+            />
           ))}
         </div>
         <div className="container">
           {grid.row5.map((r, idx) => (
-            <ResourceItem key={`row-5-col-${idx}`} resource={r} />
+            <ResourceItem
+              key={`row-5-col-${idx}`}
+              resource={r}
+              rowId={5}
+              colId={idx}
+            />
           ))}
         </div>
       </div>
