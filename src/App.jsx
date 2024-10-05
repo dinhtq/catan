@@ -124,6 +124,9 @@ function ResourceItem({ resource, rowId, colId }) {
           display: 'flex',
           placeItems: 'center',
           placeContent: 'center',
+          ':hover': {
+            backgroundColor: 'pink',
+          },
         }}
       >
         {resourceType}
@@ -139,6 +142,9 @@ function ResourceItem({ resource, rowId, colId }) {
           left: '20px',
           top: '5px',
           transform: 'rotate(60deg)',
+          ':hover': {
+            backgroundColor: 'pink',
+          },
         }}
       />
     </Box>
