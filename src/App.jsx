@@ -1,38 +1,17 @@
 import { useMemo, useState } from 'react'
-import './App.css'
 import { cloneDeep, shuffle } from 'lodash-es'
-import { Box, Button } from '@mui/material'
+import { Box, Button, colors } from '@mui/material'
 
-const ROWS = 5
-const COLS = 5
-
-const TOTAL_PIECES = 19
-
-const COLORS = {
-  RESOURCES: {
-    wood: '#1b5e20', // deep green
-    brick: '#f44336', // red
-    sheep: '#8bc34a', // lime
-    ore: '#673ab7', // purple
-    wheat: '#ffeb3b', // yellow
-    robber: '#9e9e9e',
-  },
-}
+import PiecesToGrab from './components/PiecesToGrab'
+import ResourceItem from './components/ResourceItem/ResourceItem'
+import { COLORS } from './utils/constants'
+import './App.css'
 
 const getPiece = ({ resourceType }) => {
   return {
     resourceType,
     color: COLORS.RESOURCES[resourceType],
   }
-}
-
-const piceTypes = {
-  wood: 'wood',
-  brick: 'brick',
-  sheep: 'sheep',
-  ore: 'ore',
-  wheat: 'wheat',
-  robber: 'robber',
 }
 
 const getInitialPieces = () => {
@@ -54,9 +33,8 @@ const getInitialPieces = () => {
       pieces.push(piece)
     }
   })
-  console.log('pieces', pieces)
+
   const piecesShuffled = shuffle(pieces)
-  console.log('piecesShuffled', piecesShuffled)
 
   return piecesShuffled
 }
@@ -88,67 +66,9 @@ const getGrid = (pieces) => {
     row4,
     row5,
   }
+  console.log('grid', grid)
 
   return grid
-}
-
-function ResourceItem({ resource, rowId, colId }) {
-  const { resourceType, color } = resource
-
-  const onCenterClicked = () => {
-    console.log(
-      'onCenterClicked',
-      `row ${rowId}, col ${colId}, resource ${resourceType}`,
-    )
-  }
-  const onCornerClicked = () => {
-    console.log(
-      'onCornerClicked',
-      `row ${rowId}, col ${colId}, resource ${resourceType}`,
-    )
-  }
-  return (
-    <Box
-      className="resource-item"
-      sx={{ backgroundColor: color, position: 'relative' }}
-    >
-      <Box
-        onClick={onCenterClicked}
-        sx={{
-          width: '70%',
-          height: '40%',
-          border: '1px dashed green',
-          position: 'absolute',
-          left: '15%',
-          top: '30%',
-          display: 'flex',
-          placeItems: 'center',
-          placeContent: 'center',
-          ':hover': {
-            backgroundColor: 'pink',
-          },
-        }}
-      >
-        {resourceType}
-      </Box>
-      <Box
-        onClick={onCornerClicked}
-        sx={{
-          position: 'absolute',
-          width: '10px',
-          height: '30px',
-          backgroundColor: 'white',
-          clipPath: 'none',
-          left: '20px',
-          top: '5px',
-          transform: 'rotate(60deg)',
-          ':hover': {
-            backgroundColor: 'pink',
-          },
-        }}
-      />
-    </Box>
-  )
 }
 
 export default function App() {
@@ -178,10 +98,28 @@ export default function App() {
 
   return (
     <Box>
-      <Box sx={{ position: 'absolute', left: 20, top: 20 }}>
-        <Button variant="contained" onClick={onShuffle}>
-          shuffle
-        </Button>
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 20,
+          top: 20,
+          width: '90%',
+          backgroundColor: colors.grey[900],
+          margin: 'auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          placeItems: 'center',
+          padding: '5px 10px 5px 10px',
+        }}
+      >
+        <Box>
+          <Button variant="contained" onClick={onShuffle}>
+            shuffle
+          </Button>
+        </Box>
+        <Box>
+          <PiecesToGrab />
+        </Box>
       </Box>
       <div className="main">
         <div className="container row-1">
