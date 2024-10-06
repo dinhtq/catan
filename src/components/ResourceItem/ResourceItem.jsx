@@ -5,7 +5,7 @@ import { useDrop } from 'react-dnd'
 import { piecesTypes } from '../../utils/constants'
 
 function RoadBox({ rowId, colId, resourceType }) {
-  const [teamColor, setTeamColor] = useState('white')
+  const [roadColor, setRoadColor] = useState('transparent')
   const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
       accept: piecesTypes.road,
@@ -13,7 +13,7 @@ function RoadBox({ rowId, colId, resourceType }) {
       drop(itemDropped) {
         const { pieceType, teamColor } = itemDropped
         console.log('itemDropped', itemDropped)
-        setTeamColor(teamColor)
+        setRoadColor(teamColor)
       },
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
@@ -22,28 +22,27 @@ function RoadBox({ rowId, colId, resourceType }) {
     }),
     [],
   )
-  const onRoadClicked = () => {
-    console.log(
-      'onCornerClicked',
-      `row ${rowId}, col ${colId}, resource ${resourceType}`,
-    )
-  }
+  //   const onRoadClicked = () => {
+  //     console.log(
+  //       'onCornerClicked',
+  //       `row ${rowId}, col ${colId}, resource ${resourceType}`,
+  //     )
+  //   }
   return (
     <Box
       ref={drop}
-      onClick={onRoadClicked}
       sx={{
         position: 'absolute',
         width: '10px',
         height: '30px',
-        backgroundColor: teamColor,
+        backgroundColor: isOver ? 'white' : roadColor,
         clipPath: 'none',
         left: '20px',
         top: '5px',
         transform: 'rotate(60deg)',
-        ':hover': {
-          backgroundColor: 'pink',
-        },
+        // ':hover': {
+        //   backgroundColor: 'white',
+        // },
       }}
     />
   )

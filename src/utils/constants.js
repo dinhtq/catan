@@ -14,6 +14,12 @@ export const piecesTypes = {
   city: 'city',
 }
 
+export const piecesCount = {
+  [piecesTypes.road]: 15,
+  [piecesTypes.settlement]: 5,
+  [piecesTypes.city]: 4,
+}
+
 export const COLORS = {
   RESOURCES: {
     wood: '#1b5e20', // deep green
