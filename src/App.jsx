@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import PiecesToGrab from './components/PiecesToGrab'
 import ResourceItem from './components/ResourceItem/ResourceItem'
+import Player from './Player'
 import { COLORS } from './utils/constants'
 import './App.css'
 
@@ -117,6 +118,25 @@ export default function App() {
     })
   }
 
+  const allPlayers = [
+    { 
+      name: 'Xbox',
+      id: 1
+    },
+    { 
+      name: 'Switch',
+      id: 2
+    },
+    {
+      name: 'Playstation',
+      id: 3
+    },
+    {
+      name: 'PC',
+      id: 4
+    }
+  ]
+
   return (
     <Box>
       <Box
@@ -187,6 +207,13 @@ export default function App() {
         </Box>
       </Box>
       <div className="main">
+        {allPlayers.map((item) => {
+          return (
+            <>
+              <Player playerId={item.id} name={item.name} />
+            </>
+          );
+        })}
         <div className="container row-1">
           {grid.row1.map((r, idx) => (
             <ResourceItem
