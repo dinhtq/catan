@@ -153,6 +153,15 @@ function ResourceItem({ resource, rowId, colId }) {
 
 export default function App() {
   const [resources, setResources] = useState(getInitialPieces())
+  /*
+    players = [
+      {
+        playerId: integer, // 1-4
+        cards: []
+      }
+    ]
+  */
+  const [players, setPlayers] = useState([])
 
   const grid = useMemo(() => {
     return getGrid(resources)
