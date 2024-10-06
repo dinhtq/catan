@@ -19,7 +19,7 @@ html {
 
 .container {
   font-size: 0; /*disable white space between inline block element */
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   place-content: center;
   position: relative;
