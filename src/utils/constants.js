@@ -1,12 +1,17 @@
 export const TOTAL_PIECES = 19
 
-export const pieceTypes = {
+export const resourcesTypes = {
   wood: 'wood',
   brick: 'brick',
   sheep: 'sheep',
   ore: 'ore',
   wheat: 'wheat',
-  robber: 'robber',
+}
+
+export const piecesTypes = {
+  road: 'road',
+  settlement: 'settlement',
+  city: 'city',
 }
 
 export const COLORS = {

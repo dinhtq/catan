@@ -1,18 +1,19 @@
-import { Box } from '@mui/material'
+import { Box, colors } from '@mui/material'
 
-import { pieceTypes, COLORS } from '../utils/constants'
+import { piecesTypes, COLORS } from '../utils/constants'
 
 function PiecesToGrab() {
   return (
     <Box sx={{ display: 'flex', gap: '1rem' }}>
-      {Object.keys(pieceTypes).map((piece) => {
+      {Object.keys(piecesTypes).map((piece) => {
         return (
           <Box
             key={piece}
+            title={piece}
             sx={{
               width: '20px',
               height: '20px',
-              backgroundColor: COLORS.RESOURCES[piece],
+              backgroundColor: colors.red[500],
             }}
           />
         )
