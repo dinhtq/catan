@@ -151,13 +151,18 @@ function ResourceItem({ resource, rowId, colId }) {
   )
 }
 
-function rollDice(numDice = 2, sides = 6) {
+function rollDie(sides) {
+  return Math.floor(Math.random() * sides) + 1; // Returns a random integer between 1 and 'sides'
+}
+
+function rollDice() {
   let results = [];
-  for (let i = 0; i < numDice; i++) {
-      results.push(rollDie(sides));
+  for (let i = 0; i < 2; i++) {
+      results.push(rollDie(6));
   }
   return results;
-}
+} 
+console.log('rolling the dice', rollDice());
 
 export default function App() {
   const [resources, setResources] = useState(getInitialPieces())
@@ -184,12 +189,29 @@ export default function App() {
     })
   }
 
+  const onDiceRoll = () => {
+    setDiceRolledResult((prev) => {
+      const rolledResult = rollDice()
+      console.log(rolledResult)
+      console.log('prev', prev)
+      return rolledResult
+    })
+  }
+
   return (
     <Box>
       <Box sx={{ position: 'absolute', left: 20, top: 20 }}>
         <Button variant="contained" onClick={onShuffle}>
           shuffle
         </Button>
+      </Box>
+      <Box sx={{ position: 'absolute', left:20, top: 70 }}>
+        <Button variant="contained" onClick={onDiceRoll}>
+          roll dice
+        </Button>
+      </Box>
+      <Box sx={{ position: 'absolute', left:20, top: 120 }}>
+        {diceRolledResult}
       </Box>
       <div className="main">
         <div className="container row-1">
