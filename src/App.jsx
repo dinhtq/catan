@@ -151,6 +151,14 @@ function ResourceItem({ resource, rowId, colId }) {
   )
 }
 
+function rollDice(numDice = 2, sides = 6) {
+  let results = [];
+  for (let i = 0; i < numDice; i++) {
+      results.push(rollDie(sides));
+  }
+  return results;
+}
+
 export default function App() {
   const [resources, setResources] = useState(getInitialPieces())
   /*
