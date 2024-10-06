@@ -162,6 +162,7 @@ export default function App() {
     ]
   */
   const [players, setPlayers] = useState([])
+  const [diceRolledResult, setDiceRolledResult] = useState([6, 6])
 
   const grid = useMemo(() => {
     return getGrid(resources)
