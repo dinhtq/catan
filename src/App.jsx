@@ -1,14 +1,14 @@
 import { useMemo, useState } from 'react'
 import { cloneDeep, shuffle } from 'lodash-es'
 import { Box, Button, colors } from '@mui/material'
-import Stack from '@mui/material/Stack';
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack'
+import * as React from 'react'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
 import PiecesToGrab from './components/PiecesToGrab'
 import ResourceItem from './components/ResourceItem/ResourceItem'
@@ -79,8 +79,12 @@ const getGrid = (pieces) => {
   return grid
 }
 
-
-
+function rollDice() {
+  const randNum1 = Math.floor(Math.random() * 6) + 1
+  const randNum2 = Math.floor(Math.random() * 6) + 1
+  const results = [randNum1, randNum2]
+  return results
+}
 
 export default function App() {
   const [resources, setResources] = useState(getInitialPieces())
@@ -92,16 +96,16 @@ export default function App() {
       }
     ]
   */
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
-    
+    setOpen(false)
+  }
+
   const [players, setPlayers] = useState([])
   const [diceRolledResult, setDiceRolledResult] = useState([6, 6])
 
@@ -114,6 +118,13 @@ export default function App() {
       const prevResourcesCopy = cloneDeep(prevResources)
       const shuffled = shuffle(prevResourcesCopy)
       return shuffled
+    })
+  }
+
+  const onDiceRoll = () => {
+    setDiceRolledResult(() => {
+      const rolledResult = rollDice()
+      return rolledResult
     })
   }
 
@@ -134,53 +145,63 @@ export default function App() {
         }}
       >
         <Box>
-        <Stack spacing={2} direction="row">
-          <Button variant="contained" onClick={onShuffle}>
-            shuffle
-          </Button>
-          <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        NEW GAME
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
-        }}
-      >
-        <DialogTitle>Start a New Game</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please enter the number of players
-          </DialogContentText>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="number"
-            name="number"
-            label="(1-4)"
-            type="integer"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Enter</Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-        </Stack>
+          <Stack spacing={2} direction="row">
+            <Button variant="contained" onClick={onShuffle}>
+              shuffle
+            </Button>
+            <React.Fragment>
+              <Button variant="outlined" onClick={handleClickOpen}>
+                NEW GAME
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  console.log('clicking stuff')
+                  onDiceRoll()
+                }}
+              >
+                roll dice
+              </Button>
+              <Box>result {diceRolledResult}</Box>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  component: 'form',
+                  onSubmit: (event) => {
+                    event.preventDefault()
+                    const formData = new FormData(event.currentTarget)
+                    const formJson = Object.fromEntries(formData.entries())
+                    const email = formJson.email
+                    console.log(email)
+                    handleClose()
+                  },
+                }}
+              >
+                <DialogTitle>Start a New Game</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Please enter the number of players
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="number"
+                    name="number"
+                    label="(1-4)"
+                    type="integer"
+                    fullWidth
+                    variant="standard"
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Cancel</Button>
+                  <Button type="submit">Enter</Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </Stack>
         </Box>
         <Box>
           <PiecesToGrab />
