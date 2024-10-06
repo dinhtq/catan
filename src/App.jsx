@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import './App.css'
 import { cloneDeep, shuffle } from 'lodash-es'
 import { Box, Button } from '@mui/material'
+import Player from './Player'
 
 const ROWS = 5
 const COLS = 5
@@ -234,6 +235,7 @@ export default function App() {
             />
           ))}
         </div>
+        <Player />
       </div>
     </Box>
   )
