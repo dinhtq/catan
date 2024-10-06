@@ -1,5 +1,6 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
 import { Box, colors } from '@mui/material'
+import { AddRoad as RoadIcon } from '@mui/icons-material'
 
 import { piecesTypes, COLORS } from '../utils/constants'
 
@@ -18,16 +19,18 @@ function PieceToGrab({ pieceType }) {
 
   return (
     <>
-      <DragPreviewImage connect={preview} src={'wood.jpg'} />
+      {/* <DragPreviewImage connect={preview} src={'wood.jpg'} /> */}
       <Box
         ref={drag}
         title={pieceType}
         sx={{
           width: '20px',
           height: '20px',
-          backgroundColor: colors.red[500],
+          // backgroundColor: colors.red[500],
         }}
-      />
+      >
+        <RoadIcon />
+      </Box>
     </>
   )
 }
