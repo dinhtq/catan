@@ -49,8 +49,8 @@ function RoadBox({ rowId, colId, resourceType }) {
 }
 
 function ResourceItem({ resource, rowId, colId }) {
-  const { resourceType, color } = resource
-  console.log('resourceType', resourceType)
+  const { resourceType, color, number } = resource
+  // console.log('resourceType', resourceType)
 
   const onCenterClicked = () => {
     console.log(
@@ -76,12 +76,13 @@ function ResourceItem({ resource, rowId, colId }) {
           display: 'flex',
           placeItems: 'center',
           placeContent: 'center',
+          borderRadius: '50%',
           ':hover': {
             backgroundColor: 'pink',
           },
         }}
       >
-        {resourceType}
+        {number}
       </Box>
       <RoadBox rowId={rowId} colId={colId} resourceType={resourceType} />
     </Box>

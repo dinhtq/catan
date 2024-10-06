@@ -12,59 +12,82 @@ import DialogTitle from '@mui/material/DialogTitle'
 
 import PiecesToGrab from './components/PiecesToGrab'
 import ResourceItem from './components/ResourceItem/ResourceItem'
-import { COLORS } from './utils/constants'
+import { COLORS, tokens } from './utils/constants'
 import './App.css'
 
-const getPiece = ({ resourceType }) => {
+const getGridResource = ({ resourceType }) => {
   return {
     resourceType,
     color: COLORS.RESOURCES[resourceType],
   }
 }
 
-const getInitialPieces = () => {
-  const count = {
+const getInitialGridItems = () => {
+  console.log('getInitialGridItems')
+
+  const gridItemsCount = {
     wood: 4,
     brick: 3,
     sheep: 4,
     ore: 3,
     wheat: 4,
-    robber: 1,
   }
 
-  const pieces = []
-
-  Object.keys(count).forEach((resourceTypeKey) => {
-    const resourceCount = count[resourceTypeKey]
+  const gridItems = []
+  Object.keys(gridItemsCount).forEach((resourceTypeKey) => {
+    const resourceCount = gridItemsCount[resourceTypeKey]
     for (let i = 0; i < resourceCount; i++) {
-      const piece = getPiece({ resourceType: resourceTypeKey })
-      pieces.push(piece)
+      const gridItem = getGridResource({ resourceType: resourceTypeKey })
+      gridItems.push(gridItem)
     }
   })
 
-  const piecesShuffled = shuffle(pieces)
+  console.log('gridItems', gridItems)
 
-  return piecesShuffled
+  const tokensItems = Object.keys(tokens).map((letter) => {
+    return {
+      letter,
+      number: tokens[letter],
+    }
+  })
+  console.log('tokensItems', tokensItems)
+
+  const tokensItemsShuffled = shuffle(tokensItems)
+  const gridItemsShuffled = shuffle(gridItems)
+
+  const combinedGridItems = gridItemsShuffled.map((gridItem, idx) => ({
+    ...gridItem,
+    ...tokensItemsShuffled[idx],
+  }))
+
+  // add robber to final
+  combinedGridItems.push({
+    ...getGridResource({ resourceType: 'robber' }),
+  })
+
+  console.log(combinedGridItems)
+
+  return combinedGridItems
 }
 
-const getGrid = (pieces) => {
+const getGrid = (gridItems) => {
   const row1 = [] // len 3
   const row2 = [] // len 4
   const row3 = [] // len 5
   const row4 = [] // len 4
   const row5 = [] // len 3
 
-  pieces.forEach((piece, idx) => {
+  gridItems.forEach((gridItem, idx) => {
     if (idx < 3) {
-      row1.push(piece)
+      row1.push(gridItem)
     } else if (idx < 7) {
-      row2.push(piece)
+      row2.push(gridItem)
     } else if (idx < 12) {
-      row3.push(piece)
+      row3.push(gridItem)
     } else if (idx < 16) {
-      row4.push(piece)
+      row4.push(gridItem)
     } else {
-      row5.push(piece)
+      row5.push(gridItem)
     }
   })
   const grid = {
@@ -74,7 +97,7 @@ const getGrid = (pieces) => {
     row4,
     row5,
   }
-  console.log('grid', grid)
+  // console.log('grid', grid)
 
   return grid
 }
@@ -87,7 +110,7 @@ function rollDice() {
 }
 
 export default function App() {
-  const [resources, setResources] = useState(getInitialPieces())
+  const [gridItems, setResources] = useState(getInitialGridItems())
   /*
     players = [
       {
@@ -110,8 +133,8 @@ export default function App() {
   const [diceRolledResult, setDiceRolledResult] = useState([6, 6])
 
   const grid = useMemo(() => {
-    return getGrid(resources)
-  }, [resources])
+    return getGrid(gridItems)
+  }, [gridItems])
 
   const onShuffle = () => {
     setResources((prevResources) => {
