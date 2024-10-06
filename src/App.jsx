@@ -82,6 +82,19 @@ const getGrid = (pieces) => {
 
 
 
+function rollDie(sides) {
+  return Math.floor(Math.random() * sides) + 1; // Returns a random integer between 1 and 'sides'
+}
+
+function rollDice() {
+  let results = [];
+  for (let i = 0; i < 2; i++) {
+      results.push(rollDie(6));
+  }
+  return results;
+} 
+console.log('rolling the dice', rollDice());
+
 export default function App() {
   const [resources, setResources] = useState(getInitialPieces())
   /*
@@ -114,6 +127,15 @@ export default function App() {
       const prevResourcesCopy = cloneDeep(prevResources)
       const shuffled = shuffle(prevResourcesCopy)
       return shuffled
+    })
+  }
+
+  const onDiceRoll = () => {
+    setDiceRolledResult((prev) => {
+      const rolledResult = rollDice()
+      console.log(rolledResult)
+      console.log('prev', prev)
+      return rolledResult
     })
   }
 
@@ -185,6 +207,14 @@ export default function App() {
         <Box>
           <PiecesToGrab />
         </Box>
+      </Box>
+      <Box sx={{ position: 'absolute', left:20, top: 70 }}>
+        <Button variant="contained" onClick={onDiceRoll}>
+          roll dice
+        </Button>
+      </Box>
+      <Box sx={{ position: 'absolute', left:20, top: 120 }}>
+        {diceRolledResult}
       </Box>
       <div className="main">
         <div className="container row-1">
