@@ -15,6 +15,7 @@ import ResourceItem from './components/ResourceItem/ResourceItem'
 import { COLORS, tokens } from './utils/constants'
 // import './App.css'
 import Grid from './components/Grid/Grid'
+import GridHex from './components/Grid/GridHex'
 
 const getGridResource = ({ resourceType }) => {
   return {
@@ -136,6 +137,7 @@ export default function App() {
   const grid = useMemo(() => {
     return getGrid(gridItems)
   }, [gridItems])
+  console.log('grid', grid)
 
   const onShuffle = () => {
     setResources((prevResources) => {
@@ -153,8 +155,42 @@ export default function App() {
   }
 
   return (
-    <Box>
-      <Grid />
+    <Box
+      sx={{
+        height: '100%',
+        display: 'flex',
+        placeContent: 'center',
+        placeItems: 'center',
+      }}
+    >
+      <Box id="grid-container">
+        <Box sx={{ display: 'flex', placeContent: 'center' }}>
+          {Array.from({ length: 3 }).map((_, idx) => {
+            return <GridHex key={idx} />
+          })}
+        </Box>
+        <Box sx={{ display: 'flex', placeContent: 'center' }}>
+          {Array.from({ length: 4 }).map((_, idx) => {
+            return <GridHex key={idx} />
+          })}
+        </Box>
+        <Box sx={{ display: 'flex', placeContent: 'center' }}>
+          {Array.from({ length: 5 }).map((_, idx) => {
+            return <GridHex key={idx} />
+          })}
+        </Box>
+        <Box sx={{ display: 'flex', placeContent: 'center' }}>
+          {Array.from({ length: 4 }).map((_, idx) => {
+            return <GridHex key={idx} />
+          })}
+        </Box>
+        <Box sx={{ display: 'flex', placeContent: 'center' }}>
+          {Array.from({ length: 3 }).map((_, idx) => {
+            return <GridHex key={idx} />
+          })}
+        </Box>
+      </Box>
+      {/* <Grid /> */}
     </Box>
   )
 }

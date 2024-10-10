@@ -22,12 +22,7 @@ function RoadBox({ rowId, colId, resourceType }) {
     }),
     [],
   )
-  //   const onRoadClicked = () => {
-  //     console.log(
-  //       'onCornerClicked',
-  //       `row ${rowId}, col ${colId}, resource ${resourceType}`,
-  //     )
-  //   }
+
   return (
     <Box
       ref={drop}
@@ -49,7 +44,7 @@ function RoadBox({ rowId, colId, resourceType }) {
 }
 
 function ResourceItem({ resource, rowId, colId }) {
-  const { resourceType, color, number } = resource
+  // const { resourceType, color, number } = resource
   // console.log('resourceType', resourceType)
 
   const onCenterClicked = () => {
