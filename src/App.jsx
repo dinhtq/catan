@@ -165,28 +165,38 @@ export default function App() {
     >
       <Box id="grid-container">
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {Array.from({ length: 3 }).map((_, idx) => {
-            return <GridHex key={idx} />
+          {grid.row1.map((resource, idx) => {
+            return (
+              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+            )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {Array.from({ length: 4 }).map((_, idx) => {
-            return <GridHex key={idx} />
+          {grid.row2.map((resource, idx) => {
+            return (
+              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+            )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {Array.from({ length: 5 }).map((_, idx) => {
-            return <GridHex key={idx} />
+          {grid.row3.map((resource, idx) => {
+            return (
+              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+            )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {Array.from({ length: 4 }).map((_, idx) => {
-            return <GridHex key={idx} />
+          {grid.row4.map((resource, idx) => {
+            return (
+              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+            )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {Array.from({ length: 3 }).map((_, idx) => {
-            return <GridHex key={idx} />
+          {grid.row5.map((resource, idx) => {
+            return (
+              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+            )
           })}
         </Box>
       </Box>
