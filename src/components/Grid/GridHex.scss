@@ -34,11 +34,11 @@ $hex-size: 75px;
   
   .hex:before {
     transform: rotate(60deg);
-    border: 1px solid red;
+    // border: 1px solid red;
   }
   .hex:after {
     transform: rotate(-60deg);
-    border: 1px solid blue;
+    //border: 1px solid blue;
   }
   
   /* end base hex */
