@@ -13,7 +13,8 @@ import DialogTitle from '@mui/material/DialogTitle'
 import PiecesToGrab from './components/PiecesToGrab'
 import ResourceItem from './components/ResourceItem/ResourceItem'
 import { COLORS, tokens } from './utils/constants'
-import './App.css'
+// import './App.css'
+import Grid from './components/Grid/Grid'
 
 const getGridResource = ({ resourceType }) => {
   return {
@@ -153,135 +154,7 @@ export default function App() {
 
   return (
     <Box>
-      <Box
-        sx={{
-          position: 'absolute',
-          left: 20,
-          top: 20,
-          width: '90%',
-          backgroundColor: colors.grey[900],
-          margin: 'auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          placeItems: 'center',
-          padding: '5px 10px 5px 10px',
-        }}
-      >
-        <Box>
-          <Stack spacing={2} direction="row">
-            <Button variant="contained" onClick={onShuffle}>
-              shuffle
-            </Button>
-            <React.Fragment>
-              <Button variant="outlined" onClick={handleClickOpen}>
-                NEW GAME
-              </Button>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  console.log('clicking stuff')
-                  onDiceRoll()
-                }}
-              >
-                roll dice
-              </Button>
-              <Box>result {diceRolledResult}</Box>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                  component: 'form',
-                  onSubmit: (event) => {
-                    event.preventDefault()
-                    const formData = new FormData(event.currentTarget)
-                    const formJson = Object.fromEntries(formData.entries())
-                    const email = formJson.email
-                    console.log(email)
-                    handleClose()
-                  },
-                }}
-              >
-                <DialogTitle>Start a New Game</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Please enter the number of players
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    required
-                    margin="dense"
-                    id="number"
-                    name="number"
-                    label="(1-4)"
-                    type="integer"
-                    fullWidth
-                    variant="standard"
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>Cancel</Button>
-                  <Button type="submit">Enter</Button>
-                </DialogActions>
-              </Dialog>
-            </React.Fragment>
-          </Stack>
-        </Box>
-        <Box>
-          <PiecesToGrab />
-        </Box>
-      </Box>
-      <div className="main">
-        <div className="container row-1">
-          {grid.row1.map((r, idx) => (
-            <ResourceItem
-              key={`row-1-col-${idx}`}
-              resource={r}
-              rowId={1}
-              colId={idx}
-            />
-          ))}
-        </div>
-        <div className="container">
-          {grid.row2.map((r, idx) => (
-            <ResourceItem
-              key={`row-2-col-${idx}`}
-              resource={r}
-              rowId={2}
-              colId={idx}
-            />
-          ))}
-        </div>
-        <div className="container">
-          {grid.row3.map((r, idx) => (
-            <ResourceItem
-              key={`row-3-col-${idx}`}
-              resource={r}
-              rowId={3}
-              colId={idx}
-            />
-          ))}
-        </div>
-        <div className="container row-1">
-          {grid.row4.map((r, idx) => (
-            <ResourceItem
-              key={`row-4-col-${idx}`}
-              resource={r}
-              rowId={4}
-              colId={idx}
-            />
-          ))}
-        </div>
-        <div className="container">
-          {grid.row5.map((r, idx) => (
-            <ResourceItem
-              key={`row-5-col-${idx}`}
-              resource={r}
-              rowId={5}
-              colId={idx}
-            />
-          ))}
-        </div>
-      </div>
+      <Grid />
     </Box>
   )
 }
