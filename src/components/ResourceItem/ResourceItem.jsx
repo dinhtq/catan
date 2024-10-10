@@ -77,6 +77,7 @@ function ResourceItem({ resource, rowId, colId }) {
           placeItems: 'center',
           placeContent: 'center',
           borderRadius: '50%',
+          backgroundColor: '#ffcc00',
           ':hover': {
             backgroundColor: 'pink',
           },
