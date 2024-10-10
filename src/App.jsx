@@ -167,35 +167,66 @@ export default function App() {
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
           {grid.row1.map((resource, idx) => {
             return (
-              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+              <GridHex
+                key={idx}
+                resource={resource}
+                rowId={1}
+                colId={idx}
+                isLastHex={idx === grid.row1.length - 1}
+              />
             )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
           {grid.row2.map((resource, idx) => {
             return (
-              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+              <GridHex
+                key={idx}
+                resource={resource}
+                rowId={2}
+                colId={idx}
+                isLastHex={idx === grid.row2.length - 1}
+              />
             )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
           {grid.row3.map((resource, idx) => {
             return (
-              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+              <GridHex
+                key={idx}
+                resource={resource}
+                rowId={3}
+                colId={idx}
+                isLastHex={idx === grid.row3.length - 1}
+              />
             )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
           {grid.row4.map((resource, idx) => {
             return (
-              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+              <GridHex
+                key={idx}
+                resource={resource}
+                rowId={4}
+                colId={idx}
+                isLastHex={idx === grid.row4.length - 1}
+              />
             )
           })}
         </Box>
         <Box sx={{ display: 'flex', placeContent: 'center' }}>
           {grid.row5.map((resource, idx) => {
             return (
-              <GridHex key={idx} resource={resource} rowId={1} colId={idx} />
+              <GridHex
+                key={idx}
+                resource={resource}
+                rowId={5}
+                colId={idx}
+                isLastHex={idx === grid.row5.length - 1}
+                isLastRow
+              />
             )
           })}
         </Box>
