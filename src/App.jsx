@@ -6,11 +6,13 @@ import {
   COLORS,
   devCardsTypes,
   GAME_PHASE,
+  piecesTypes,
   resourcesTypes,
   tokens,
 } from './utils/constants'
 // import './App.css'
 import GridHex from './components/Grid/GridHex'
+import Players from './components/Players/Players'
 
 const getGridResource = ({ resourceType }) => {
   return {
@@ -122,13 +124,21 @@ function getInitialPlayers({ totalPlayersCount }) {
         [resourcesTypes.wheat]: 0,
         [resourcesTypes.wood]: 0,
       },
-      developmentCards: {
+      devCards: {
         [devCardsTypes.knight]: 0,
         [devCardsTypes.monopoly]: 0,
         [devCardsTypes.roadBuilding]: 0,
         [devCardsTypes.victory]: 0,
         [devCardsTypes.yearOfPlenty]: 0,
       },
+      // player's roads, settlements and cities, [{ pieceType: 'settlement', posRowId: 1, posColId: 1, position: 'left' }]
+      pieces: [
+        {
+          [piecesTypes.settlement]: 0,
+          [piecesTypes.city]: 0,
+          [piecesTypes.road]: 0,
+        },
+      ],
       color: playerColor,
     }
   })
@@ -154,6 +164,8 @@ export default function App() {
     getInitialPlayers({ totalPlayersCount: 4 }),
   )
   const [diceRolledResult, setDiceRolledResult] = useState([6, 6])
+  const [larsgestArmyPlayer, setLarsgestArmyPlayer] = useState(undefined)
+  const [longestRoadPlayer, setLongestRoadPlayer] = useState(undefined)
 
   const grid = useMemo(() => {
     return getGrid(gridItems)
@@ -182,79 +194,93 @@ export default function App() {
       sx={{
         height: '100%',
         display: 'flex',
-        placeContent: 'center',
-        placeItems: 'center',
       }}
     >
-      <Box id="grid-container">
-        <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {grid.row1.map((resource, idx) => {
-            return (
-              <GridHex
-                key={idx}
-                resource={resource}
-                rowId={1}
-                colId={idx}
-                isLastHex={idx === grid.row1.length - 1}
-              />
-            )
-          })}
-        </Box>
-        <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {grid.row2.map((resource, idx) => {
-            return (
-              <GridHex
-                key={idx}
-                resource={resource}
-                rowId={2}
-                colId={idx}
-                isLastHex={idx === grid.row2.length - 1}
-              />
-            )
-          })}
-        </Box>
-        <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {grid.row3.map((resource, idx) => {
-            return (
-              <GridHex
-                key={idx}
-                resource={resource}
-                rowId={3}
-                colId={idx}
-                isLastHex={idx === grid.row3.length - 1}
-              />
-            )
-          })}
-        </Box>
-        <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {grid.row4.map((resource, idx) => {
-            return (
-              <GridHex
-                key={idx}
-                resource={resource}
-                rowId={4}
-                colId={idx}
-                isLastHex={idx === grid.row4.length - 1}
-              />
-            )
-          })}
-        </Box>
-        <Box sx={{ display: 'flex', placeContent: 'center' }}>
-          {grid.row5.map((resource, idx) => {
-            return (
-              <GridHex
-                key={idx}
-                resource={resource}
-                rowId={5}
-                colId={idx}
-                isLastHex={idx === grid.row5.length - 1}
-                isLastRow
-              />
-            )
-          })}
+      <Box
+        sx={{
+          flex: 2,
+          display: 'flex',
+          placeContent: 'center',
+          placeItems: 'center',
+        }}
+      >
+        <Box id="grid-container">
+          <Box sx={{ display: 'flex', placeContent: 'center' }}>
+            {grid.row1.map((resource, idx) => {
+              return (
+                <GridHex
+                  key={idx}
+                  resource={resource}
+                  rowId={1}
+                  colId={idx}
+                  isLastHex={idx === grid.row1.length - 1}
+                />
+              )
+            })}
+          </Box>
+          <Box sx={{ display: 'flex', placeContent: 'center' }}>
+            {grid.row2.map((resource, idx) => {
+              return (
+                <GridHex
+                  key={idx}
+                  resource={resource}
+                  rowId={2}
+                  colId={idx}
+                  isLastHex={idx === grid.row2.length - 1}
+                />
+              )
+            })}
+          </Box>
+          <Box sx={{ display: 'flex', placeContent: 'center' }}>
+            {grid.row3.map((resource, idx) => {
+              return (
+                <GridHex
+                  key={idx}
+                  resource={resource}
+                  rowId={3}
+                  colId={idx}
+                  isLastHex={idx === grid.row3.length - 1}
+                />
+              )
+            })}
+          </Box>
+          <Box sx={{ display: 'flex', placeContent: 'center' }}>
+            {grid.row4.map((resource, idx) => {
+              return (
+                <GridHex
+                  key={idx}
+                  resource={resource}
+                  rowId={4}
+                  colId={idx}
+                  isLastHex={idx === grid.row4.length - 1}
+                />
+              )
+            })}
+          </Box>
+          <Box sx={{ display: 'flex', placeContent: 'center' }}>
+            {grid.row5.map((resource, idx) => {
+              return (
+                <GridHex
+                  key={idx}
+                  resource={resource}
+                  rowId={5}
+                  colId={idx}
+                  isLastHex={idx === grid.row5.length - 1}
+                  isLastRow
+                />
+              )
+            })}
+          </Box>
         </Box>
       </Box>
-      {/* <Grid /> */}
+      <Box id="players" sx={{ flex: 1, margin: 10 }}>
+        <Players
+          curPlayerId={playerTurn}
+          players={players}
+          longestRoadPlayer={longestRoadPlayer}
+          larsgestArmyPlayer={larsgestArmyPlayer}
+        />
+      </Box>
     </Box>
   )
 }
