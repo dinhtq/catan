@@ -66,15 +66,14 @@ function getBuildingStyle({ placement, isTaken }) {
 }
 
 function BuildingPlacement({
-  isTaken,
   placement,
   onBuildingPlacementClicked,
   piecePlaced,
 }) {
-  console.log('piecePlaced', piecePlaced)
+  const isTaken = !!piecePlaced
   const isSettlementPlaced =
     isTaken && piecePlaced && piecePlaced.pieceType === piecesTypes.settlement
-  console.log('isSettlementPlaced', isSettlementPlaced)
+
   return (
     <Box
       sx={getBuildingStyle({ placement, isTaken })}

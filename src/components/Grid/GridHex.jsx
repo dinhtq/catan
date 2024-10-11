@@ -64,11 +64,6 @@ function GridHex({
       <BuildingPlacement
         placement="bottom"
         onBuildingPlacementClicked={onBuildingPlacementClicked}
-        isTaken={
-          !!buildingsPlacedMap[
-            getBuildingsPlacedMapKey({ rowId, colId, placement: 'bottom' })
-          ]
-        }
         piecePlaced={
           buildingsPlacedMap[
             getBuildingsPlacedMapKey({ rowId, colId, placement: 'bottom' })
