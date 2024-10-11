@@ -1,5 +1,12 @@
 export const TOTAL_PIECES = 19
 
+export const GAME_PHASE = {
+  INIT_NEW_GAME: 'INIT_NEW_GAME',
+  INIT_PLAYER_TURN: 'INIT_PLAYER_TURN',
+  STARTED_PLAYER_TURN: 'PLAYER_TURN',
+  GAME_OVER: 'GAME_OVER',
+}
+
 export const resourcesTypes = {
   wood: 'wood',
   brick: 'brick',
@@ -14,6 +21,22 @@ export const piecesTypes = {
   city: 'city',
 }
 
+export const devCardsTypes = {
+  knight: 'knight',
+  victory: 'victory',
+  roadBuilding: 'roadBuilding',
+  yearOfPlenty: 'yearOfPlenty',
+  monopoly: 'monopoly',
+}
+
+export const devCardsCount = {
+  [devCardsTypes.knight]: 14,
+  [devCardsTypes.victory]: 5,
+  [devCardsTypes.roadBuilding]: 2,
+  [devCardsTypes.yearOfPlenty]: 2,
+  [devCardsTypes.monopoly]: 2,
+}
+
 export const piecesCount = {
   [piecesTypes.road]: 15,
   [piecesTypes.settlement]: 5,
@@ -21,6 +44,12 @@ export const piecesCount = {
 }
 
 export const COLORS = {
+  TEAMS: {
+    blue: 'blue',
+    red: 'red',
+    orange: 'orange',
+    white: 'white',
+  },
   RESOURCES: {
     wood: '#1b5e20', // deep green
     brick: '#f44336', // red

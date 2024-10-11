@@ -1,20 +1,15 @@
 import { useMemo, useState } from 'react'
 import { cloneDeep, shuffle } from 'lodash-es'
-import { Box, Button, colors } from '@mui/material'
-import Stack from '@mui/material/Stack'
-import * as React from 'react'
-import TextField from '@mui/material/TextField'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import { Box } from '@mui/material'
 
-import PiecesToGrab from './components/PiecesToGrab'
-import ResourceItem from './components/ResourceItem/ResourceItem'
-import { COLORS, tokens } from './utils/constants'
+import {
+  COLORS,
+  devCardsTypes,
+  GAME_PHASE,
+  resourcesTypes,
+  tokens,
+} from './utils/constants'
 // import './App.css'
-import Grid from './components/Grid/Grid'
 import GridHex from './components/Grid/GridHex'
 
 const getGridResource = ({ resourceType }) => {
@@ -25,7 +20,7 @@ const getGridResource = ({ resourceType }) => {
 }
 
 const getInitialGridItems = () => {
-  console.log('getInitialGridItems')
+  //console.log('getInitialGridItems')
 
   const gridItemsCount = {
     wood: 4,
@@ -44,7 +39,7 @@ const getInitialGridItems = () => {
     }
   })
 
-  console.log('gridItems', gridItems)
+  //console.log('gridItems', gridItems)
 
   const tokensItems = Object.keys(tokens).map((letter) => {
     return {
@@ -52,7 +47,7 @@ const getInitialGridItems = () => {
       number: tokens[letter],
     }
   })
-  console.log('tokensItems', tokensItems)
+  //console.log('tokensItems', tokensItems)
 
   const tokensItemsShuffled = shuffle(tokensItems)
   const gridItemsShuffled = shuffle(gridItems)
@@ -67,7 +62,7 @@ const getInitialGridItems = () => {
     ...getGridResource({ resourceType: 'robber' }),
   })
 
-  console.log(combinedGridItems)
+  //console.log(combinedGridItems)
 
   return combinedGridItems
 }
@@ -111,8 +106,37 @@ function rollDice() {
   return results
 }
 
+function getInitialPlayers({ totalPlayersCount }) {
+  const teamColors = Object.keys(COLORS.TEAMS)
+  const teamColorsShuffled = shuffle(teamColors)
+  let curTeamColorIdx = 0
+  const players = Array.from({ length: totalPlayersCount }).map((_, idx) => {
+    const playerColor = teamColorsShuffled[curTeamColorIdx]
+    curTeamColorIdx++
+    return {
+      playerId: idx + 1,
+      resources: {
+        [resourcesTypes.brick]: 0,
+        [resourcesTypes.ore]: 0,
+        [resourcesTypes.sheep]: 0,
+        [resourcesTypes.wheat]: 0,
+        [resourcesTypes.wood]: 0,
+      },
+      developmentCards: {
+        [devCardsTypes.knight]: 0,
+        [devCardsTypes.monopoly]: 0,
+        [devCardsTypes.roadBuilding]: 0,
+        [devCardsTypes.victory]: 0,
+        [devCardsTypes.yearOfPlenty]: 0,
+      },
+      color: playerColor,
+    }
+  })
+  return players
+}
+
 export default function App() {
-  const [gridItems, setResources] = useState(getInitialGridItems())
+  const [gridItems, setGridItems] = useState(getInitialGridItems())
   /*
     players = [
       {
@@ -121,26 +145,22 @@ export default function App() {
       }
     ]
   */
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const [players, setPlayers] = useState([])
+  // testing - after INIT_NEW_GAME, now initial players settlements and roads placements
+  const [gamePhase, setGamePhase] = useState(GAME_PHASE.INIT_PLAYER_TURN)
+  const [playerTurn, setPlayerTurn] = useState(1)
+  const [players, setPlayers] = useState(
+    getInitialPlayers({ totalPlayersCount: 4 }),
+  )
   const [diceRolledResult, setDiceRolledResult] = useState([6, 6])
 
   const grid = useMemo(() => {
     return getGrid(gridItems)
   }, [gridItems])
-  console.log('grid', grid)
 
   const onShuffle = () => {
-    setResources((prevResources) => {
+    setGridItems((prevResources) => {
       const prevResourcesCopy = cloneDeep(prevResources)
       const shuffled = shuffle(prevResourcesCopy)
       return shuffled
@@ -153,6 +173,9 @@ export default function App() {
       return rolledResult
     })
   }
+
+  console.log('players', players)
+  console.log('grid', grid)
 
   return (
     <Box
