@@ -185,6 +185,7 @@ export default function App() {
           colKey,
           rowKey,
           placement: 'bottom'
+          playerTeamColor
         }]
     }
   */
@@ -255,6 +256,7 @@ export default function App() {
           colKey: colId,
           rowKey: rowId,
           placement,
+          playerTeamColor: players.find((p) => p.playerId === playerTurn).color,
         }
         prevCopy[playerTurn].push(newPiece)
       }

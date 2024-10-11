@@ -69,9 +69,12 @@ function BuildingPlacement({
   isTaken,
   placement,
   onBuildingPlacementClicked,
-  buildingPlaced,
+  piecePlaced,
 }) {
-  const isSettlementPlaced = isTaken && buildingPlaced
+  console.log('piecePlaced', piecePlaced)
+  const isSettlementPlaced =
+    isTaken && piecePlaced && piecePlaced.pieceType === piecesTypes.settlement
+  console.log('isSettlementPlaced', isSettlementPlaced)
   return (
     <Box
       sx={getBuildingStyle({ placement, isTaken })}
@@ -86,7 +89,7 @@ function BuildingPlacement({
             position: 'absolute',
             left: '-10px',
             top: '-10px',
-            backgroundColor: 'midnightblue',
+            backgroundColor: piecePlaced.playerTeamColor,
             borderRadius: '50%',
             padding: '4px',
           }}

@@ -30,7 +30,7 @@ function GridHex({
     flatPlayersPiecesAndPos.forEach((piece) => {
       // console.log('piece', piece)
       const key = `${piece.rowKey}-${piece.colKey}-${piece.placement}`
-      map[key] = piece.pieceType
+      map[key] = piece
     })
     return map
   }, [playersPiecesAndPositions])
@@ -69,7 +69,7 @@ function GridHex({
             getBuildingsPlacedMapKey({ rowId, colId, placement: 'bottom' })
           ]
         }
-        buildingPlaced={
+        piecePlaced={
           buildingsPlacedMap[
             getBuildingsPlacedMapKey({ rowId, colId, placement: 'bottom' })
           ]
