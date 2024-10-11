@@ -1,13 +1,6 @@
-import {
-  Paper,
-  Box,
-  Typography,
-  Divider,
-  colors,
-  useTheme,
-} from '@mui/material'
+import { Paper, Box, Typography } from '@mui/material'
 import { useMemo } from 'react'
-import { devCardsTypes, piecesTypes } from '../../utils/constants'
+import { COLORS, devCardsTypes, piecesTypes } from '../../utils/constants'
 
 function Player({
   player,
@@ -16,12 +9,9 @@ function Player({
   longestRoadPlayer,
   larsgestArmyPlayer,
 }) {
-  const theme = useTheme()
   const { playerId, resources, devCards, color, pieces } = player
 
-  // testing
-  // console.log('player', player)
-  const isPlayer1 = playerId === 1
+  const isActivePlayer = curPlayerId === playerId
 
   const playerPoints = useMemo(() => {
     let curPoints = 0
@@ -33,9 +23,6 @@ function Player({
     }
 
     const monopolyDevCardsPoints = devCards[devCardsTypes.monopoly]
-    if (isPlayer1) {
-      console.log('pieces', pieces)
-    }
     const piecesCount = Object.keys(pieces).reduce((prevCount, curPiece) => {
       // console.log('curPiece', curPiece)
       if (curPiece === piecesTypes.settlement) {
@@ -45,12 +32,6 @@ function Player({
       }
       return prevCount
     }, 0)
-
-    if (isPlayer1) {
-      console.log('curPoints', curPoints)
-      console.log('monopolyDevCardsPoints', monopolyDevCardsPoints)
-      console.log('piecesCount', piecesCount)
-    }
 
     const totalPoints = curPoints + monopolyDevCardsPoints + piecesCount
 
@@ -65,11 +46,10 @@ function Player({
         flexDirection: 'column',
         gap: '0.2rem',
         padding: '10px 10px 10px 10px',
-        borderRadius: 1,
-        border: '1px solid',
-        borderColor: 'divider',
-        backgroundColor:
-          curPlayerId === playerId ? 'rgba(251, 195, 106, 0.1)' : 'initial',
+        borderRadius: '10px',
+        border: isActivePlayer ? '1px solid green' : 'none',
+        backgroundColor: color,
+        color: color === COLORS.TEAMS.white ? 'black' : 'inherit',
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
