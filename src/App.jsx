@@ -113,7 +113,7 @@ function getInitialPlayers({ totalPlayersCount }) {
   const teamColorsShuffled = shuffle(teamColors)
   let curTeamColorIdx = 0
   const players = Array.from({ length: totalPlayersCount }).map((_, idx) => {
-    const playerColor = teamColorsShuffled[curTeamColorIdx]
+    const playerColor = COLORS.TEAMS[teamColorsShuffled[curTeamColorIdx]]
     curTeamColorIdx++
     return {
       playerId: idx + 1,

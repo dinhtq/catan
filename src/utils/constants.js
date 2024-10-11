@@ -1,3 +1,5 @@
+import { colors } from '@mui/material'
+
 export const TOTAL_PIECES = 19
 
 export const GAME_PHASE = {
@@ -45,10 +47,10 @@ export const piecesCount = {
 
 export const COLORS = {
   TEAMS: {
-    blue: 'blue',
-    red: 'red',
-    orange: 'orange',
-    white: 'white',
+    blue: colors.blue[500],
+    red: colors.red[500],
+    orange: colors.orange[500],
+    white: colors.common.white,
   },
   RESOURCES: {
     wood: '#1b5e20', // deep green
