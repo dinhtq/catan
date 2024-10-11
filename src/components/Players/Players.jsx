@@ -18,6 +18,11 @@ function Player({
 }) {
   const theme = useTheme()
   const { playerId, resources, devCards, color, pieces } = player
+
+  // testing
+  // console.log('player', player)
+  const isPlayer1 = playerId === 1
+
   const playerPoints = useMemo(() => {
     let curPoints = 0
     if (longestRoadPlayer === playerId) {
@@ -28,15 +33,24 @@ function Player({
     }
 
     const monopolyDevCardsPoints = devCards[devCardsTypes.monopoly]
-
+    if (isPlayer1) {
+      console.log('pieces', pieces)
+    }
     const piecesCount = Object.keys(pieces).reduce((prevCount, curPiece) => {
-      if (curPiece === piecesTypes.road) {
-        return prevCount + 1
+      // console.log('curPiece', curPiece)
+      if (curPiece === piecesTypes.settlement) {
+        return prevCount + pieces[curPiece] * 1
       } else if (curPiece === piecesTypes.city) {
-        return prevCount + 2
+        return prevCount + pieces[curPiece] * 2
       }
       return prevCount
     }, 0)
+
+    if (isPlayer1) {
+      console.log('curPoints', curPoints)
+      console.log('monopolyDevCardsPoints', monopolyDevCardsPoints)
+      console.log('piecesCount', piecesCount)
+    }
 
     const totalPoints = curPoints + monopolyDevCardsPoints + piecesCount
 
@@ -64,7 +78,6 @@ function Player({
       </Box>
 
       <Box sx={{}}>resources</Box>
-      {/* {isLastPlayerItem && curPlayerId !== playerId && <Divider />} */}
     </Box>
   )
 }

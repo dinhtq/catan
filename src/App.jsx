@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { cloneDeep, shuffle } from 'lodash-es'
+import { useEffect, useMemo, useState } from 'react'
+import { cloneDeep, flatten, shuffle } from 'lodash-es'
 import { Box } from '@mui/material'
 
 import {
@@ -132,17 +132,26 @@ function getInitialPlayers({ totalPlayersCount }) {
         [devCardsTypes.yearOfPlenty]: 0,
       },
       // player's roads, settlements and cities, [{ pieceType: 'settlement', posRowId: 1, posColId: 1, position: 'left' }]
-      pieces: [
-        {
-          [piecesTypes.settlement]: 0,
-          [piecesTypes.city]: 0,
-          [piecesTypes.road]: 0,
-        },
-      ],
+      pieces: {
+        [piecesTypes.settlement]: 0,
+        [piecesTypes.city]: 0,
+        [piecesTypes.road]: 0,
+      },
       color: playerColor,
     }
   })
   return players
+}
+
+function getColObj({ resourceType }) {
+  return {
+    top: resourceType,
+    topLeft: resourceType,
+    topRight: resourceType,
+    botLeft: resourceType,
+    bottom: resourceType,
+    botRight: resourceType,
+  }
 }
 
 export default function App() {
@@ -160,15 +169,52 @@ export default function App() {
   // testing - after INIT_NEW_GAME, now initial players settlements and roads placements
   const [gamePhase, setGamePhase] = useState(GAME_PHASE.INIT_PLAYER_TURN)
   const [playerTurn, setPlayerTurn] = useState(1)
+  const [selectedPlayerBuildingType, setSelectedPlayerBuildingType] = useState(
+    piecesTypes.settlement,
+  )
   const [players, setPlayers] = useState(
     getInitialPlayers({ totalPlayersCount: 4 }),
   )
   const [diceRolledResult, setDiceRolledResult] = useState([6, 6])
   const [larsgestArmyPlayer, setLarsgestArmyPlayer] = useState(undefined)
   const [longestRoadPlayer, setLongestRoadPlayer] = useState(undefined)
+  /*
+    {
+      1: [{
+          pieceType: 'settlement',
+          colKey,
+          rowKey,
+          placement: 'bottom'
+        }]
+    }
+  */
+  const [playersPiecesAndPositions, setPlayersPiecesAndPositions] = useState({
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+  })
 
-  const grid = useMemo(() => {
-    return getGrid(gridItems)
+  // TODO: rename piecesPlacementsMap to buildingsPlacementsResourcesMap
+  const { grid, piecesPlacementsMap } = useMemo(() => {
+    const g = getGrid(gridItems)
+    const piecesPlacementsMap = {}
+
+    Object.keys(g).forEach((rowKey) => {
+      const rowCols = g[rowKey]
+      rowCols.forEach((resource, colIdx) => {
+        const colKey = `col${colIdx + 1}`
+        piecesPlacementsMap[rowKey] = {
+          ...piecesPlacementsMap[rowKey],
+          [colKey]: {
+            ...getColObj({ resourceType: resource.resourceType }),
+            data: { ...resource },
+          },
+        }
+      })
+    })
+
+    return { grid: g, piecesPlacementsMap }
   }, [gridItems])
 
   const onShuffle = () => {
@@ -186,8 +232,52 @@ export default function App() {
     })
   }
 
+  const handleBuildingPlacement = ({ placement, colId, rowId }) => {
+    console.log('***** handleBuildingPlacement')
+    console.log('rowId', rowId)
+    console.log('colId', colId)
+    /* update piecesPositionsAndResources */
+    // get resources surrounding the position
+    const resourceType = piecesPlacementsMap[rowId][colId][placement]
+    setPlayersPiecesAndPositions((prev) => {
+      const prevCopy = cloneDeep(prev)
+      // check if building position (row, col, placement) is taken
+      const prevCopyValuesFlattened = flatten(Object.values(prevCopy))
+      console.log('prevCopyValuesFlattened', prevCopyValuesFlattened)
+      const alreadyTaken = prevCopyValuesFlattened.find(
+        (i) =>
+          i.colKey === colId && i.rowKey === rowId && i.placement === placement,
+      )
+      console.log('alreadyTaken', alreadyTaken)
+      if (!alreadyTaken) {
+        const newPiece = {
+          pieceType: selectedPlayerBuildingType,
+          colKey: colId,
+          rowKey: rowId,
+          placement,
+        }
+        prevCopy[playerTurn].push(newPiece)
+      }
+      return prevCopy
+    })
+    /* update players pieces */
+    setPlayers((prevPlayers) => {
+      const prevPlayersCopy = cloneDeep(prevPlayers)
+      const foundPlayer = prevPlayersCopy.find(
+        (player) => player.playerId === playerTurn,
+      )
+      foundPlayer.pieces[selectedPlayerBuildingType]++
+      return prevPlayersCopy
+    })
+  }
+
   console.log('players', players)
   console.log('grid', grid)
+  console.log('piecesPlacementsMap', piecesPlacementsMap)
+
+  useEffect(() => {
+    console.log('playersPiecesAndPositions', playersPiecesAndPositions)
+  }, [playersPiecesAndPositions])
 
   return (
     <Box
@@ -211,9 +301,11 @@ export default function App() {
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={1}
-                  colId={idx}
+                  rowId={'row1'}
+                  colId={`col${idx + 1}`}
                   isLastHex={idx === grid.row1.length - 1}
+                  onBuildingPlacement={handleBuildingPlacement}
+                  playersPiecesAndPositions={playersPiecesAndPositions}
                 />
               )
             })}
@@ -224,9 +316,11 @@ export default function App() {
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={2}
-                  colId={idx}
+                  rowId={'row2'}
+                  colId={`col${idx + 1}`}
                   isLastHex={idx === grid.row2.length - 1}
+                  onBuildingPlacement={handleBuildingPlacement}
+                  playersPiecesAndPositions={playersPiecesAndPositions}
                 />
               )
             })}
@@ -237,9 +331,11 @@ export default function App() {
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={3}
-                  colId={idx}
+                  rowId={'row3'}
+                  colId={`col${idx + 1}`}
                   isLastHex={idx === grid.row3.length - 1}
+                  onBuildingPlacement={handleBuildingPlacement}
+                  playersPiecesAndPositions={playersPiecesAndPositions}
                 />
               )
             })}
@@ -250,9 +346,11 @@ export default function App() {
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={4}
-                  colId={idx}
+                  rowId={'row4'}
+                  colId={`col${idx + 1}`}
                   isLastHex={idx === grid.row4.length - 1}
+                  onBuildingPlacement={handleBuildingPlacement}
+                  playersPiecesAndPositions={playersPiecesAndPositions}
                 />
               )
             })}
@@ -264,9 +362,11 @@ export default function App() {
                   key={idx}
                   resource={resource}
                   rowId={5}
-                  colId={idx}
+                  colId={`col${idx + 1}`}
                   isLastHex={idx === grid.row5.length - 1}
                   isLastRow
+                  onBuildingPlacement={handleBuildingPlacement}
+                  playersPiecesAndPositions={playersPiecesAndPositions}
                 />
               )
             })}
