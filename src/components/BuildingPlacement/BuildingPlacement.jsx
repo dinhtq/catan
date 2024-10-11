@@ -1,4 +1,6 @@
 import { Box } from '@mui/material'
+import { OtherHouses as SettlementIcon } from '@mui/icons-material'
+import { piecesTypes } from '../../utils/constants'
 
 const defaultStyle = {
   position: 'absolute',
@@ -6,6 +8,7 @@ const defaultStyle = {
   height: '15px',
   backgroundColor: 'pink',
   zIndex: 10,
+  border: '1px solid yellow',
 }
 
 const getStyle = (style) => {
@@ -58,18 +61,38 @@ const buildingPlacementStyleMap = {
 function getBuildingStyle({ placement, isTaken }) {
   return {
     ...buildingPlacementStyleMap[placement].style,
-    backgroundColor: isTaken ? 'red' : 'pink',
+    backgroundColor: isTaken ? 'transparent' : 'pink',
   }
 }
 
-function BuildingPlacement({ isTaken, placement, onBuildingPlacementClicked }) {
+function BuildingPlacement({
+  isTaken,
+  placement,
+  onBuildingPlacementClicked,
+  buildingPlaced,
+}) {
+  const isSettlementPlaced = isTaken && buildingPlaced
   return (
     <Box
       sx={getBuildingStyle({ placement, isTaken })}
       onClick={() => {
         onBuildingPlacementClicked({ placement })
       }}
-    />
+    >
+      {isSettlementPlaced && (
+        <SettlementIcon
+          fontSize="large"
+          sx={{
+            position: 'absolute',
+            left: '-10px',
+            top: '-10px',
+            backgroundColor: 'midnightblue',
+            borderRadius: '50%',
+            padding: '4px',
+          }}
+        />
+      )}
+    </Box>
   )
 }
 

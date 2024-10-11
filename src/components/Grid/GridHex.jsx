@@ -69,6 +69,11 @@ function GridHex({
             getBuildingsPlacedMapKey({ rowId, colId, placement: 'bottom' })
           ]
         }
+        buildingPlaced={
+          buildingsPlacedMap[
+            getBuildingsPlacedMapKey({ rowId, colId, placement: 'bottom' })
+          ]
+        }
       />
     </Box>
   )
