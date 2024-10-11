@@ -1,73 +1,68 @@
 import { Box } from '@mui/material'
 
+const defaultStyle = {
+  position: 'absolute',
+  width: '10px',
+  height: '50px',
+  backgroundColor: 'transparent',
+}
+
+const getStyle = (style) => {
+  return {
+    ...defaultStyle,
+    ...style,
+  }
+}
+
 const roadPlacementStyleMap = {
   topLeft: {
-    style: {
-      position: 'absolute',
+    style: getStyle({
       top: '-24px',
       left: '-2px',
-      width: '10px',
-      height: '50px',
-      backgroundColor: 'white',
       transform: 'rotate(60deg)',
-    },
+      border: '1px dashed white',
+    }),
   },
   topRight: {
-    style: {
-      position: 'absolute',
+    style: getStyle({
       top: '-23px',
       right: '62px',
-      width: '10px',
-      height: '50px',
-      backgroundColor: 'purple',
+      border: '1px dashed purple',
       transform: 'rotate(-60deg)',
-    },
+    }),
   },
   left: {
-    style: {
-      position: 'absolute',
+    style: getStyle({
       top: '39px',
       left: '-38px',
-      width: '10px',
-      height: '50px',
-      backgroundColor: 'blue',
+      border: '1px dashed blue',
       transform: 'rotate(0deg)',
-    },
+    }),
   },
 
   botLeft: {
-    style: {
-      position: 'absolute',
+    style: getStyle({
       bottom: '-48px',
       left: '-7px',
-      width: '10px',
-      height: '50px',
-      backgroundColor: 'cyan',
+      border: '1px dashed cyan',
       transform: 'rotate(-60deg)',
-    },
+    }),
   },
   botRight: {
-    style: {
-      position: 'absolute',
+    style: getStyle({
       bottom: '-50px',
       right: '61px',
-      width: '10px',
-      height: '50px',
-      backgroundColor: 'transparent',
       border: '1px dashed limegreen',
       transform: 'rotate(60deg)',
-    },
+    }),
   },
   right: {
-    style: {
-      position: 'absolute',
+    style: getStyle({
       top: '39px',
       right: '25px',
-      width: '10px',
-      height: '50px',
-      backgroundColor: 'burlywood',
+      border: '1px dashed burlywood',
       transform: 'rotate(0deg)',
-    },
+    }),
   },
 }
 
