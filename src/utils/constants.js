@@ -47,9 +47,9 @@ export const piecesCount = {
 
 export const COLORS = {
   TEAMS: {
-    blue: colors.blue[500],
-    red: colors.red[500],
-    orange: colors.orange[500],
+    blue: colors.indigo[700],
+    red: colors.red[700],
+    orange: colors.orange[700],
     white: colors.common.white,
   },
   RESOURCES: {
