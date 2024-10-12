@@ -18,6 +18,7 @@ function GridHex({
   isLastRow,
   onBuildingPlacement,
   playersPiecesAndPositions,
+  onRoadPlacementClicked,
 }) {
   const { resourceType, color, number } = resource
   const isSecondToLastRowLastHex = isLastHex && rowId === 4
@@ -46,20 +47,110 @@ function GridHex({
   return (
     <Box className="grid-hex">
       <Box className="hex" sx={{ backgroundColor: color }} />
-      <RoadPlacement placement="topLeft" />
-      <RoadPlacement placement="topRight" />
-      <RoadPlacement placement="left" />
+      <RoadPlacement
+        placement="topLeft"
+        onRoadPlacementClicked={onRoadPlacementClicked}
+        rowKey={rowId}
+        colKey={colId}
+        piecePlaced={
+          buildingsPlacedMap[
+            getBuildingsPlacedMapKey({ rowId, colId, placement: 'topLeft' })
+          ]
+        }
+      />
+      <RoadPlacement
+        placement="topRight"
+        onRoadPlacementClicked={onRoadPlacementClicked}
+        rowKey={rowId}
+        colKey={colId}
+        piecePlaced={
+          buildingsPlacedMap[
+            getBuildingsPlacedMapKey({ rowId, colId, placement: 'topRight' })
+          ]
+        }
+      />
+      <RoadPlacement
+        placement="left"
+        onRoadPlacementClicked={onRoadPlacementClicked}
+        rowKey={rowId}
+        colKey={colId}
+        piecePlaced={
+          buildingsPlacedMap[
+            getBuildingsPlacedMapKey({ rowId, colId, placement: 'left' })
+          ]
+        }
+      />
       {/* last hex right road */}
-      {isLastHex && <RoadPlacement placement="right" />}
+      {isLastHex && (
+        <RoadPlacement
+          placement="right"
+          rowKey={rowId}
+          colKey={colId}
+          onRoadPlacementClicked={onRoadPlacementClicked}
+          piecePlaced={
+            buildingsPlacedMap[
+              getBuildingsPlacedMapKey({ rowId, colId, placement: 'right' })
+            ]
+          }
+        />
+      )}
       {/* last row roads, bot left, bot right */}
       {isLastRow && (
         <>
-          <RoadPlacement placement="botLeft" />
-          <RoadPlacement placement="botRight" />
+          <RoadPlacement
+            placement="botLeft"
+            rowKey={rowId}
+            colKey={colId}
+            onRoadPlacementClicked={onRoadPlacementClicked}
+            piecePlaced={
+              buildingsPlacedMap[
+                getBuildingsPlacedMapKey({ rowId, colId, placement: 'botLeft' })
+              ]
+            }
+          />
+          <RoadPlacement
+            placement="botRight"
+            rowKey={rowId}
+            colKey={colId}
+            onRoadPlacementClicked={onRoadPlacementClicked}
+            piecePlaced={
+              buildingsPlacedMap[
+                getBuildingsPlacedMapKey({
+                  rowId,
+                  colId,
+                  placement: 'botRight',
+                })
+              ]
+            }
+          />
         </>
       )}
-      {isSecondToLastRowLastHex && <RoadPlacement placement="botRight" />}
-      {isMiddleRowLastHex && <RoadPlacement placement="botRight" />}
+      {isSecondToLastRowLastHex && (
+        <RoadPlacement
+          placement="botRight"
+          rowKey={rowId}
+          colKey={colId}
+          onRoadPlacementClicked={onRoadPlacementClicked}
+          piecePlaced={
+            buildingsPlacedMap[
+              getBuildingsPlacedMapKey({ rowId, colId, placement: 'botRight' })
+            ]
+          }
+        />
+      )}
+      {isMiddleRowLastHex && (
+        <RoadPlacement
+          placement="botRight"
+          rowKey={rowId}
+          colKey={colId}
+          onRoadPlacementClicked={onRoadPlacementClicked}
+          piecePlaced={
+            buildingsPlacedMap[
+              getBuildingsPlacedMapKey({ rowId, colId, placement: 'botRight' })
+            ]
+          }
+        />
+      )}
 
       <BuildingPlacement
         placement="bottom"

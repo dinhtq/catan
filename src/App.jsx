@@ -169,8 +169,9 @@ export default function App() {
   // testing - after INIT_NEW_GAME, now initial players settlements and roads placements
   const [gamePhase, setGamePhase] = useState(GAME_PHASE.INIT_PLAYER_TURN)
   const [playerTurn, setPlayerTurn] = useState(1)
+  // settlement, city or road
   const [selectedPlayerBuildingType, setSelectedPlayerBuildingType] = useState(
-    piecesTypes.settlement,
+    piecesTypes.road,
   )
   const [players, setPlayers] = useState(
     getInitialPlayers({ totalPlayersCount: 4 }),
@@ -239,7 +240,7 @@ export default function App() {
     console.log('colId', colId)
     /* update piecesPositionsAndResources */
     // get resources surrounding the position
-    const resourceType = piecesPlacementsMap[rowId][colId][placement]
+    //const resourceType = piecesPlacementsMap[rowId][colId][placement]
     setPlayersPiecesAndPositions((prev) => {
       const prevCopy = cloneDeep(prev)
       // check if building position (row, col, placement) is taken
@@ -273,6 +274,31 @@ export default function App() {
     })
   }
 
+  const handleRoadPlacement = ({ placement, colId, rowId }) => {
+    /* update piecesPositionsAndResources */
+    setPlayersPiecesAndPositions((prev) => {
+      const prevCopy = cloneDeep(prev)
+      // check if building position (row, col, placement) is taken
+      const prevCopyValuesFlattened = flatten(Object.values(prevCopy))
+      const alreadyTaken = prevCopyValuesFlattened.find(
+        (i) =>
+          i.colKey === colId && i.rowKey === rowId && i.placement === placement,
+      )
+      if (!alreadyTaken) {
+        const newPiece = {
+          pieceType: selectedPlayerBuildingType,
+          colKey: colId,
+          rowKey: rowId,
+          placement,
+          playerTeamColor: players.find((p) => p.playerId === playerTurn).color,
+        }
+        prevCopy[playerTurn].push(newPiece)
+      }
+      return prevCopy
+    })
+    // update player road count
+  }
+
   console.log('players', players)
   console.log('grid', grid)
   console.log('piecesPlacementsMap', piecesPlacementsMap)
@@ -299,14 +325,23 @@ export default function App() {
         <Box id="grid-container">
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
             {grid.row1.map((resource, idx) => {
+              const rowKey = 'row1'
+              const colKey = `col${idx + 1}`
               return (
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={'row1'}
-                  colId={`col${idx + 1}`}
+                  rowId={rowKey}
+                  colId={colKey}
                   isLastHex={idx === grid.row1.length - 1}
                   onBuildingPlacement={handleBuildingPlacement}
+                  onRoadPlacementClicked={({ placement }) =>
+                    handleRoadPlacement({
+                      placement,
+                      rowId: rowKey,
+                      colId: colKey,
+                    })
+                  }
                   playersPiecesAndPositions={playersPiecesAndPositions}
                 />
               )
@@ -314,13 +349,22 @@ export default function App() {
           </Box>
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
             {grid.row2.map((resource, idx) => {
+              const rowKey = 'row2'
+              const colKey = `col${idx + 1}`
               return (
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={'row2'}
-                  colId={`col${idx + 1}`}
+                  rowId={rowKey}
+                  colId={colKey}
                   isLastHex={idx === grid.row2.length - 1}
+                  onRoadPlacementClicked={({ placement }) =>
+                    handleRoadPlacement({
+                      placement,
+                      rowId: rowKey,
+                      colId: colKey,
+                    })
+                  }
                   onBuildingPlacement={handleBuildingPlacement}
                   playersPiecesAndPositions={playersPiecesAndPositions}
                 />
@@ -329,13 +373,22 @@ export default function App() {
           </Box>
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
             {grid.row3.map((resource, idx) => {
+              const rowKey = 'row3'
+              const colKey = `col${idx + 1}`
               return (
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={'row3'}
-                  colId={`col${idx + 1}`}
+                  rowId={rowKey}
+                  colId={colKey}
                   isLastHex={idx === grid.row3.length - 1}
+                  onRoadPlacementClicked={({ placement }) =>
+                    handleRoadPlacement({
+                      placement,
+                      rowId: rowKey,
+                      colId: colKey,
+                    })
+                  }
                   onBuildingPlacement={handleBuildingPlacement}
                   playersPiecesAndPositions={playersPiecesAndPositions}
                 />
@@ -344,13 +397,22 @@ export default function App() {
           </Box>
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
             {grid.row4.map((resource, idx) => {
+              const rowKey = 'row4'
+              const colKey = `col${idx + 1}`
               return (
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={'row4'}
-                  colId={`col${idx + 1}`}
+                  rowId={rowKey}
+                  colId={colKey}
                   isLastHex={idx === grid.row4.length - 1}
+                  onRoadPlacementClicked={({ placement }) =>
+                    handleRoadPlacement({
+                      placement,
+                      rowId: rowKey,
+                      colId: colKey,
+                    })
+                  }
                   onBuildingPlacement={handleBuildingPlacement}
                   playersPiecesAndPositions={playersPiecesAndPositions}
                 />
@@ -359,14 +421,23 @@ export default function App() {
           </Box>
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
             {grid.row5.map((resource, idx) => {
+              const rowKey = 'row5'
+              const colKey = `col${idx + 1}`
               return (
                 <GridHex
                   key={idx}
                   resource={resource}
-                  rowId={5}
-                  colId={`col${idx + 1}`}
+                  rowId={rowKey}
+                  colId={colKey}
                   isLastHex={idx === grid.row5.length - 1}
                   isLastRow
+                  onRoadPlacementClicked={({ placement }) =>
+                    handleRoadPlacement({
+                      placement,
+                      rowId: rowKey,
+                      colId: colKey,
+                    })
+                  }
                   onBuildingPlacement={handleBuildingPlacement}
                   playersPiecesAndPositions={playersPiecesAndPositions}
                 />

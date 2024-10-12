@@ -1,4 +1,5 @@
 import { Paper, Box, Typography, colors } from '@mui/material'
+import { OtherHouses as SettlementIcon } from '@mui/icons-material'
 import { useMemo } from 'react'
 import { COLORS, devCardsTypes, piecesTypes } from '../../utils/constants'
 
@@ -91,7 +92,9 @@ function Player({
           <Typography>Points {playerPoints}</Typography>
         </Box>
 
-        <Box sx={{}}>resources</Box>
+        <Box sx={{}}>
+          <SettlementIcon fontSize="large" />
+        </Box>
       </Box>
     </Box>
   )
