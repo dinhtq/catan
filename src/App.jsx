@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { cloneDeep, flatten, shuffle } from 'lodash-es'
-import { Box } from '@mui/material'
+import { Box, Button, Chip } from '@mui/material'
 
 import {
   COLORS,
@@ -13,6 +13,7 @@ import {
 // import './App.css'
 import GridHex from './components/Grid/GridHex'
 import Players from './components/Players/Players'
+import Dice from './components/Dice/Dice'
 
 const getGridResource = ({ resourceType }) => {
   return {
@@ -101,13 +102,6 @@ const getGrid = (gridItems) => {
   return grid
 }
 
-function rollDice() {
-  const randNum1 = Math.floor(Math.random() * 6) + 1
-  const randNum2 = Math.floor(Math.random() * 6) + 1
-  const results = [randNum1, randNum2]
-  return results
-}
-
 function getInitialPlayers({ totalPlayersCount }) {
   const teamColors = Object.keys(COLORS.TEAMS)
   const teamColorsShuffled = shuffle(teamColors)
@@ -167,7 +161,9 @@ export default function App() {
   const [open, setOpen] = useState(false)
 
   // testing - after INIT_NEW_GAME, now initial players settlements and roads placements
-  const [gamePhase, setGamePhase] = useState(GAME_PHASE.INIT_PLAYER_TURN)
+  const [gamePhase, setGamePhase] = useState(
+    GAME_PHASE.INIT_PLAYER_TURN_ROLL_DICE,
+  )
   const [playerTurn, setPlayerTurn] = useState(1)
   // settlement, city or road
   const [selectedPlayerBuildingType, setSelectedPlayerBuildingType] = useState(
@@ -176,7 +172,7 @@ export default function App() {
   const [players, setPlayers] = useState(
     getInitialPlayers({ totalPlayersCount: 4 }),
   )
-  const [diceRolledResult, setDiceRolledResult] = useState([6, 6])
+  const [diceRolledResult, setDiceRolledResult] = useState(undefined)
   const [larsgestArmyPlayer, setLarsgestArmyPlayer] = useState(undefined)
   const [longestRoadPlayer, setLongestRoadPlayer] = useState(undefined)
   /*
@@ -224,13 +220,6 @@ export default function App() {
       const prevResourcesCopy = cloneDeep(prevResources)
       const shuffled = shuffle(prevResourcesCopy)
       return shuffled
-    })
-  }
-
-  const onDiceRoll = () => {
-    setDiceRolledResult(() => {
-      const rolledResult = rollDice()
-      return rolledResult
     })
   }
 
@@ -311,9 +300,9 @@ export default function App() {
   // console.log('grid', grid)
   // console.log('piecesPlacementsMap', piecesPlacementsMap)
 
-  useEffect(() => {
-    console.log('players', players)
-  }, [players])
+  // useEffect(() => {
+  //   console.log('players', players)
+  // }, [players])
 
   return (
     <Box
@@ -330,6 +319,25 @@ export default function App() {
           placeItems: 'center',
         }}
       >
+        <Box
+          sx={{
+            position: 'absolute',
+            left: 10,
+            top: 10,
+            display: 'flex',
+            gap: '1rem',
+          }}
+        >
+          <Box>
+            Game Phase: <Chip label={gamePhase} />
+          </Box>
+          <Box>
+            Cur Player Turn: <Chip label={playerTurn} />
+          </Box>
+          <Box>
+            Dice: <Chip label={diceRolledResult} />
+          </Box>
+        </Box>
         <Box id="grid-container">
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
             {grid.row1.map((resource, idx) => {
@@ -454,13 +462,30 @@ export default function App() {
           </Box>
         </Box>
       </Box>
-      <Box id="players" sx={{ flex: 1, margin: 10 }}>
+      <Box
+        id="players"
+        sx={{
+          flex: 1,
+          margin: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+        }}
+      >
         <Players
           curPlayerId={playerTurn}
           players={players}
           longestRoadPlayer={longestRoadPlayer}
           larsgestArmyPlayer={larsgestArmyPlayer}
         />
+        <Box>
+          <Dice
+            onDiceChanged={(diceResult) => {
+              console.log('diceResult', diceResult)
+              setDiceRolledResult(diceResult)
+            }}
+          />
+        </Box>
       </Box>
     </Box>
   )

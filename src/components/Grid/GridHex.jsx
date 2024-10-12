@@ -38,11 +38,11 @@ function GridHex({
   // console.log('buildingsPlaced', buildingsPlaced)
 
   const onBuildingPlacementClicked = ({ placement }) => {
-    console.log('onBuildingPlacementClicked')
+    //console.log('onBuildingPlacementClicked')
     onBuildingPlacement({ rowId, colId, placement })
   }
 
-  console.log('buildingsPlacedMap', buildingsPlacedMap)
+  //console.log('buildingsPlacedMap', buildingsPlacedMap)
 
   return (
     <Box className="grid-hex">
