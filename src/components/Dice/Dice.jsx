@@ -1,8 +1,9 @@
 import { Button, Box } from '@mui/material'
 import { memo, useRef } from 'react'
 import ReactDice from 'react-dice-complete'
+import { GAME_PHASE } from '../../utils/constants'
 
-function Dice({ onDiceChanged }) {
+function Dice({ gamePhase, onDiceChanged }) {
   const ref = useRef(null)
 
   const rollDone = (totalValue, values) => {
@@ -14,7 +15,11 @@ function Dice({ onDiceChanged }) {
 
   return (
     <Box>
-      <Button variant="contained" onClick={rollAll}>
+      <Button
+        variant="contained"
+        onClick={rollAll}
+        disabled={gamePhase !== GAME_PHASE.INIT_PLAYER_TURN_ROLL_DICE}
+      >
         Roll Dice
       </Button>
       <ReactDice

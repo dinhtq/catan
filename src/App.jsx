@@ -480,6 +480,7 @@ export default function App() {
         />
         <Box>
           <Dice
+            gamePhase={gamePhase}
             onDiceChanged={(diceResult) => {
               console.log('diceResult', diceResult)
               setDiceRolledResult(diceResult)
