@@ -297,15 +297,23 @@ export default function App() {
       return prevCopy
     })
     // update player road count
+    setPlayers((prevPlayers) => {
+      const prevPlayersCopy = cloneDeep(prevPlayers)
+      const foundPlayer = prevPlayersCopy.find(
+        (player) => player.playerId === playerTurn,
+      )
+      foundPlayer.pieces[selectedPlayerBuildingType]++
+      return prevPlayersCopy
+    })
   }
 
-  console.log('players', players)
-  console.log('grid', grid)
-  console.log('piecesPlacementsMap', piecesPlacementsMap)
+  // console.log('players', players)
+  // console.log('grid', grid)
+  // console.log('piecesPlacementsMap', piecesPlacementsMap)
 
   useEffect(() => {
-    console.log('playersPiecesAndPositions', playersPiecesAndPositions)
-  }, [playersPiecesAndPositions])
+    console.log('players', players)
+  }, [players])
 
   return (
     <Box
