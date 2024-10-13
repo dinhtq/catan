@@ -8,8 +8,8 @@ const defaultStyle = {
   height: '15px',
   backgroundColor: 'pink',
   zIndex: 10,
-  border: '1px solid grey',
-  borderRadius: '3px',
+  //   border: '1px solid grey',
+  //   borderRadius: '3px',
 }
 
 const getStyle = (style) => {
@@ -39,6 +39,8 @@ const buildingPlacementStyleMap = {
       top: '-26px',
       left: '30px',
       //border: '1px solid red',
+      border: '1px solid grey',
+      borderRadius: '3px',
     }),
   },
 

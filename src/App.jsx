@@ -162,13 +162,11 @@ export default function App() {
   const [open, setOpen] = useState(false)
 
   // testing - after INIT_NEW_GAME, now initial players settlements and roads placements
-  const [gamePhase, setGamePhase] = useState(
-    GAME_PHASE.INIT_PLAYER_TURN_ROLL_DICE,
-  )
+  const [gamePhase, setGamePhase] = useState(GAME_PHASE.INIT_PLAYER_TURN_BUILD)
   const [playerTurn, setPlayerTurn] = useState(1)
   // settlement, city or road
   const [selectedPlayerBuildingType, setSelectedPlayerBuildingType] = useState(
-    piecesTypes.road,
+    piecesTypes.settlement,
   )
   const [players, setPlayers] = useState(
     getInitialPlayers({ totalPlayersCount: 4 }),
@@ -199,17 +197,73 @@ export default function App() {
     const g = getGrid(gridItems)
     const piecesPlacementsMap = {}
 
+    /*
+      grid = {
+        row1: [
+          {
+            color: "#8bc34a"
+            letter: "K"
+            number: 8
+            resourceType: "sheep"
+          }
+        ]
+      }
+
+    */
+
+    // const hexNeighbors = {
+    //   row1: {
+    //     col1: {
+    //       resourcesType: 'wood',
+    //       buildingsPlacements: {
+    //         top: ['wood'], // self
+    //         topRight: [] // next col resource, if last hex in row, then self
+    //       }
+    //     }
+    //   }
+    // }
+
+    for (let r = 1; r < 6; r++) {
+      const rowKey = `row${r}`
+      let totalCols = 3
+      if (r === 2) {
+        totalCols = totalCols + 1
+      } else if (r === 3) {
+        totalCols = totalCols + 2
+      } else if (r === 4) {
+        totalCols = totalCols + 1
+      }
+      for (let c = 1; c < totalCols; c++) {
+        //
+      }
+    }
+
+    const hexNeighbors = {}
+
     Object.keys(g).forEach((rowKey) => {
       const rowCols = g[rowKey]
       rowCols.forEach((resource, colIdx) => {
         const colKey = `col${colIdx + 1}`
-        piecesPlacementsMap[rowKey] = {
+        /*
+          // gotta do this for all building placements
+          hex TOP building placement neighbors of cur hex is:
+            1) cur hex (self)
+            2) hex in prev row at curIdx, unless:
+               a) first row
+               b) row 2, col 4
+               c) row 3, col 5
+            3) hex in prev row at curIdx - 1, unless
+        */
+        const prevRowNum = rowKey.slice(rowKey.indexOf('w'))
+        console.log('prevRowNumn', prevRowNum)
+        const prevRowResourceAtSameIdx = (piecesPlacementsMap[rowKey] = {
           ...piecesPlacementsMap[rowKey],
           [colKey]: {
             ...getColObj({ resourceType: resource.resourceType }),
             data: { ...resource },
+            //neighbors: neighbors,
           },
-        }
+        })
       })
     })
 
@@ -230,6 +284,15 @@ export default function App() {
     console.log('playersPiecesAndPositions', playersPiecesAndPositions)
     console.log('piecesPlacementsMap', piecesPlacementsMap)
     console.log('grid', grid)
+
+    // get all neighboring resources per buildings positions (maybe could be memo'd)
+    const buildingPlacementsNeighboringResources = {
+      row1: {
+        col1: {
+          bottom: { [resourcesTypes.brick]: 2, [resourcesTypes.wheat]: 1 },
+        },
+      },
+    }
   }
 
   const handleBuildingPlacement = ({ placement, colId, rowId }) => {
@@ -309,9 +372,10 @@ export default function App() {
   // console.log('grid', grid)
   // console.log('piecesPlacementsMap', piecesPlacementsMap)
 
-  // useEffect(() => {
-  //   console.log('players', players)
-  // }, [players])
+  useEffect(() => {
+    console.log('playersPiecesAndPositions', playersPiecesAndPositions)
+    console.log('piecesPlacementsMap', piecesPlacementsMap)
+  }, [playersPiecesAndPositions])
 
   return (
     <Box
