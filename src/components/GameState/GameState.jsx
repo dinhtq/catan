@@ -24,8 +24,10 @@ const GameState = memo(
           position: 'absolute',
           left: 20,
           top: 20,
+          width: '50%',
           display: 'flex',
           gap: '1rem',
+          alignItems: 'center',
         }}
       >
         <Box>
@@ -45,9 +47,11 @@ const GameState = memo(
             </Select>
           </FormControl>
         </Box>
-        <Box>
+        <Box sx={{ minWidth: 200 }}>
           <FormControl fullWidth>
-            <InputLabel id="piece-types-label">Game Phase</InputLabel>
+            <InputLabel id="piece-types-label">
+              Player Piece Placement Type
+            </InputLabel>
             <Select
               labelId="piece-types-label"
               value={selectedPlayerPieceType}
