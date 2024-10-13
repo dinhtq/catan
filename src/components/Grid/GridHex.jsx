@@ -45,6 +45,26 @@ function GridHex({
 
   //console.log('buildingsPlacedMap', buildingsPlacedMap)
 
+  const isTopLeftBuildingPlacement =
+    rowId === 'row1' ||
+    (rowId === 'row2' && colId === 'col1') ||
+    (rowId === 'row3' && colId === 'col1')
+
+  const isTopRightBuildingPlacement =
+    (rowId === 'row1' && colId === 'col3') ||
+    (rowId === 'row2' && colId === 'col4') ||
+    (rowId === 'row3' && colId === 'col5')
+
+  const isBotRightBuildingPlacement =
+    (rowId === 'row3' && colId === 'col5') ||
+    (rowId === 'row4' && colId === 'col4') ||
+    (rowId === 'row5' && colId === 'col3')
+
+  const isBotLeftBuildingPlacement =
+    (rowId === 'row3' && colId === 'col1') ||
+    (rowId === 'row4' && colId === 'col1') ||
+    (rowId === 'row5' && colId === 'col1')
+
   return (
     <Box className="grid-hex">
       <Box className="hex" sx={{ backgroundColor: color }} />
@@ -148,6 +168,67 @@ function GridHex({
           piecePlaced={
             buildingsPlacedMap[
               getBuildingsPlacedMapKey({ rowId, colId, placement: 'botRight' })
+            ]
+          }
+        />
+      )}
+      <BuildingPlacement
+        gamePhase={gamePhase}
+        placement="top"
+        onBuildingPlacementClicked={onBuildingPlacementClicked}
+        piecePlaced={
+          buildingsPlacedMap[
+            getBuildingsPlacedMapKey({ rowId, colId, placement: 'top' })
+          ]
+        }
+      />
+      {isTopLeftBuildingPlacement && (
+        <BuildingPlacement
+          gamePhase={gamePhase}
+          placement="topLeft"
+          onBuildingPlacementClicked={onBuildingPlacementClicked}
+          piecePlaced={
+            buildingsPlacedMap[
+              getBuildingsPlacedMapKey({ rowId, colId, placement: 'topLeft' })
+            ]
+          }
+        />
+      )}
+
+      {isTopRightBuildingPlacement && (
+        <BuildingPlacement
+          gamePhase={gamePhase}
+          placement="topRight"
+          onBuildingPlacementClicked={onBuildingPlacementClicked}
+          piecePlaced={
+            buildingsPlacedMap[
+              getBuildingsPlacedMapKey({ rowId, colId, placement: 'topRight' })
+            ]
+          }
+        />
+      )}
+
+      {isBotRightBuildingPlacement && (
+        <BuildingPlacement
+          gamePhase={gamePhase}
+          placement="botRight"
+          onBuildingPlacementClicked={onBuildingPlacementClicked}
+          piecePlaced={
+            buildingsPlacedMap[
+              getBuildingsPlacedMapKey({ rowId, colId, placement: 'botRight' })
+            ]
+          }
+        />
+      )}
+
+      {isBotLeftBuildingPlacement && (
+        <BuildingPlacement
+          gamePhase={gamePhase}
+          placement="botLeft"
+          onBuildingPlacementClicked={onBuildingPlacementClicked}
+          piecePlaced={
+            buildingsPlacedMap[
+              getBuildingsPlacedMapKey({ rowId, colId, placement: 'botLeft' })
             ]
           }
         />

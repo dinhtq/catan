@@ -8,7 +8,6 @@ const defaultStyle = {
   height: '15px',
   backgroundColor: 'pink',
   zIndex: 10,
-  border: '1px solid yellow',
 }
 
 const getStyle = (style) => {
@@ -21,39 +20,45 @@ const getStyle = (style) => {
 const buildingPlacementStyleMap = {
   topLeft: {
     style: getStyle({
-      top: '-24px',
-      left: '-2px',
+      top: '18px',
+      left: '-40px',
+      border: '1px solid cyan',
     }),
   },
   topRight: {
     style: getStyle({
-      top: '-23px',
-      right: '62px',
+      top: '18px',
+      right: '25px',
+      border: '1px solid pink',
     }),
   },
   top: {
     style: getStyle({
-      top: '39px',
-      left: '-38px',
+      top: '-26px',
+      left: '30px',
+      border: '1px solid red',
     }),
   },
 
   botLeft: {
     style: getStyle({
-      bottom: '-48px',
-      left: '-7px',
+      bottom: '-13px',
+      left: '-43px',
+      border: '1px solid purple',
     }),
   },
   botRight: {
     style: getStyle({
-      bottom: '-50px',
-      right: '61px',
+      bottom: '-13px',
+      right: '22px',
+      border: '1px solid limegreen',
     }),
   },
   bottom: {
     style: getStyle({
       bottom: '-52px',
       left: '31px',
+      border: '1px solid yellow',
     }),
   },
 }
@@ -61,7 +66,7 @@ const buildingPlacementStyleMap = {
 function getBuildingStyle({ placement, isTaken }) {
   return {
     ...buildingPlacementStyleMap[placement].style,
-    backgroundColor: isTaken ? 'transparent' : 'pink',
+    backgroundColor: isTaken ? 'transparent' : 'initial',
   }
 }
 
