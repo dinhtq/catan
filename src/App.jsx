@@ -225,7 +225,11 @@ export default function App() {
   }
 
   const distributeResources = ({ diceResult }) => {
+    console.log('******')
     // go through building pieces placed and distribute resources
+    console.log('playersPiecesAndPositions', playersPiecesAndPositions)
+    console.log('piecesPlacementsMap', piecesPlacementsMap)
+    console.log('grid', grid)
   }
 
   const handleBuildingPlacement = ({ placement, colId, rowId }) => {
@@ -328,7 +332,11 @@ export default function App() {
           gamePhase={gamePhase}
           playerTurn={playerTurn}
           diceRolledResult={diceRolledResult}
+          selectedPlayerPieceType={selectedPlayerBuildingType}
           onGamePhaseChange={(newGamePhase) => setGamePhase(newGamePhase)}
+          onPlayerPieceTypeChange={(newPlayerPieceType) =>
+            setSelectedPlayerBuildingType(newPlayerPieceType)
+          }
         />
         <Box id="grid-container">
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
@@ -481,6 +489,7 @@ export default function App() {
             onDiceChanged={(diceResult) => {
               console.log('diceResult', diceResult)
               setDiceRolledResult(diceResult)
+              distributeResources({ diceResult })
             }}
           />
         </Box>

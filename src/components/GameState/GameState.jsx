@@ -7,14 +7,16 @@ import {
   Chip,
 } from '@mui/material'
 import { memo } from 'react'
-import { GAME_PHASE } from '../../utils/constants'
+import { GAME_PHASE, piecesTypes } from '../../utils/constants'
 
 const GameState = memo(
   function MyGameState({
     gamePhase,
     playerTurn,
     diceRolledResult,
+    selectedPlayerPieceType,
     onGamePhaseChange,
+    onPlayerPieceTypeChange,
   }) {
     return (
       <Box
@@ -44,6 +46,23 @@ const GameState = memo(
           </FormControl>
         </Box>
         <Box>
+          <FormControl fullWidth>
+            <InputLabel id="piece-types-label">Game Phase</InputLabel>
+            <Select
+              labelId="piece-types-label"
+              value={selectedPlayerPieceType}
+              label="Selected Player Piece Type"
+              onChange={(e) => onPlayerPieceTypeChange(e.target.value)}
+            >
+              {Object.keys(piecesTypes).map((pieceType) => (
+                <MenuItem key={pieceType} value={pieceType}>
+                  {pieceType}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+        <Box>
           Cur Player Turn: <Chip label={playerTurn} />
         </Box>
         <Box>
@@ -56,7 +75,8 @@ const GameState = memo(
     return (
       prevProps.gamePhase === nextProps.gamePhase &&
       prevProps.playerTurn === nextProps.playerTurn &&
-      prevProps.diceRolledResult === nextProps.diceRolledResult
+      prevProps.diceRolledResult === nextProps.diceRolledResult &&
+      prevProps.selectedPlayerPieceType === nextProps.selectedPlayerPieceType
     )
   },
 )
