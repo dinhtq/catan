@@ -14,6 +14,7 @@ import {
 import GridHex from './components/Grid/GridHex'
 import Players from './components/Players/Players'
 import Dice from './components/Dice/Dice'
+import GameState from './components/GameState/GameState'
 
 const getGridResource = ({ resourceType }) => {
   return {
@@ -223,7 +224,7 @@ export default function App() {
     })
   }
 
-  const distributeResources = () => {
+  const distributeResources = ({ diceResult }) => {
     // go through building pieces placed and distribute resources
   }
 
@@ -323,25 +324,12 @@ export default function App() {
           placeItems: 'center',
         }}
       >
-        <Box
-          sx={{
-            position: 'absolute',
-            left: 10,
-            top: 10,
-            display: 'flex',
-            gap: '1rem',
-          }}
-        >
-          <Box>
-            Game Phase: <Chip label={gamePhase} />
-          </Box>
-          <Box>
-            Cur Player Turn: <Chip label={playerTurn} />
-          </Box>
-          <Box>
-            Dice: <Chip label={diceRolledResult} />
-          </Box>
-        </Box>
+        <GameState
+          gamePhase={gamePhase}
+          playerTurn={playerTurn}
+          diceRolledResult={diceRolledResult}
+          onGamePhaseChange={(newGamePhase) => setGamePhase(newGamePhase)}
+        />
         <Box id="grid-container">
           <Box sx={{ display: 'flex', placeContent: 'center' }}>
             {grid.row1.map((resource, idx) => {
