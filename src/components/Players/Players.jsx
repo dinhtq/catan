@@ -86,14 +86,33 @@ function Player({
 
   return (
     <Box key={player.playerId} sx={style}>
-      <Box sx={{ position: 'relative', zIndex: 2, backgroundColor: color }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography>Player {player.playerId}</Typography>
-          <Typography>Points {playerPoints}</Typography>
+      <Box
+        sx={{
+          position: 'relative',
+          zIndex: 2,
+          backgroundColor: color,
+          p: 1,
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography sx={{ fontSize: 'small' }}>
+            Player {player.playerId}
+          </Typography>
+          <Typography sx={{ fontSize: 'small' }}>
+            Points {playerPoints}
+          </Typography>
         </Box>
 
-        <Box sx={{}}>
-          <SettlementIcon fontSize="large" />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box></Box>
+          <Box>
+            <SettlementIcon fontSize="small" />
+          </Box>
         </Box>
       </Box>
     </Box>

@@ -50,10 +50,10 @@ export const piecesCount = {
 
 export const COLORS = {
   TEAMS: {
-    blue: colors.indigo[700],
-    red: colors.red[700],
-    orange: colors.orange[700],
-    white: colors.common.white,
+    blue: colors.indigo[900],
+    red: colors.red[900],
+    orange: colors.orange[900],
+    white: colors.grey[100],
   },
   RESOURCES: {
     wood: '#1b5e20', // deep green
