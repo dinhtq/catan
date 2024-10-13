@@ -8,6 +8,8 @@ const defaultStyle = {
   height: '15px',
   backgroundColor: 'pink',
   zIndex: 10,
+  border: '1px solid grey',
+  borderRadius: '3px',
 }
 
 const getStyle = (style) => {
@@ -22,21 +24,21 @@ const buildingPlacementStyleMap = {
     style: getStyle({
       top: '18px',
       left: '-40px',
-      border: '1px solid cyan',
+      //border: '1px solid cyan',
     }),
   },
   topRight: {
     style: getStyle({
       top: '18px',
       right: '25px',
-      border: '1px solid pink',
+      //border: '1px solid pink',
     }),
   },
   top: {
     style: getStyle({
       top: '-26px',
       left: '30px',
-      border: '1px solid red',
+      //border: '1px solid red',
     }),
   },
 
@@ -44,21 +46,21 @@ const buildingPlacementStyleMap = {
     style: getStyle({
       bottom: '-13px',
       left: '-43px',
-      border: '1px solid purple',
+      //border: '1px solid purple',
     }),
   },
   botRight: {
     style: getStyle({
       bottom: '-13px',
       right: '22px',
-      border: '1px solid limegreen',
+      //border: '1px solid limegreen',
     }),
   },
   bottom: {
     style: getStyle({
       bottom: '-52px',
       left: '31px',
-      border: '1px solid yellow',
+      //border: '1px solid yellow',
     }),
   },
 }
