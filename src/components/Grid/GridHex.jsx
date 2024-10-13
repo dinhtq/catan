@@ -11,6 +11,7 @@ const getBuildingsPlacedMapKey = ({ rowId, colId, placement }) => {
 }
 
 function GridHex({
+  gamePhase,
   resource,
   rowId,
   colId,
@@ -153,6 +154,7 @@ function GridHex({
       )}
 
       <BuildingPlacement
+        gamePhase={gamePhase}
         placement="bottom"
         onBuildingPlacementClicked={onBuildingPlacementClicked}
         piecePlaced={

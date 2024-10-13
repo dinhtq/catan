@@ -223,6 +223,10 @@ export default function App() {
     })
   }
 
+  const distributeResources = () => {
+    // go through building pieces placed and distribute resources
+  }
+
   const handleBuildingPlacement = ({ placement, colId, rowId }) => {
     console.log('***** handleBuildingPlacement')
     console.log('rowId', rowId)
@@ -346,6 +350,7 @@ export default function App() {
               return (
                 <GridHex
                   key={idx}
+                  gamePhase={gamePhase}
                   resource={resource}
                   rowId={rowKey}
                   colId={colKey}
@@ -370,6 +375,7 @@ export default function App() {
               return (
                 <GridHex
                   key={idx}
+                  gamePhase={gamePhase}
                   resource={resource}
                   rowId={rowKey}
                   colId={colKey}
@@ -394,6 +400,7 @@ export default function App() {
               return (
                 <GridHex
                   key={idx}
+                  gamePhase={gamePhase}
                   resource={resource}
                   rowId={rowKey}
                   colId={colKey}
@@ -418,6 +425,7 @@ export default function App() {
               return (
                 <GridHex
                   key={idx}
+                  gamePhase={gamePhase}
                   resource={resource}
                   rowId={rowKey}
                   colId={colKey}
@@ -442,6 +450,7 @@ export default function App() {
               return (
                 <GridHex
                   key={idx}
+                  gamePhase={gamePhase}
                   resource={resource}
                   rowId={rowKey}
                   colId={colKey}

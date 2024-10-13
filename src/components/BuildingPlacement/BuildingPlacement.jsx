@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { OtherHouses as SettlementIcon } from '@mui/icons-material'
-import { piecesTypes } from '../../utils/constants'
+import { GAME_PHASE, piecesTypes } from '../../utils/constants'
 
 const defaultStyle = {
   position: 'absolute',
@@ -66,6 +66,7 @@ function getBuildingStyle({ placement, isTaken }) {
 }
 
 function BuildingPlacement({
+  gamePhase,
   placement,
   onBuildingPlacementClicked,
   piecePlaced,
@@ -78,7 +79,9 @@ function BuildingPlacement({
     <Box
       sx={getBuildingStyle({ placement, isTaken })}
       onClick={() => {
-        onBuildingPlacementClicked({ placement })
+        if (gamePhase === GAME_PHASE.INIT_PLAYER_TURN_BUILD) {
+          onBuildingPlacementClicked({ placement })
+        }
       }}
     >
       {isSettlementPlaced && (
