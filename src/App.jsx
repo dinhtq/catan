@@ -83,6 +83,8 @@ function rollDice() {
   const randNum1 = Math.floor(Math.random() * 6) + 1
   const randNum2 = Math.floor(Math.random() * 6) + 1
   const results = [randNum1, randNum2]
+  document.getElementById("dice1").src = `/dice${randNum1}.png`;
+  document.getElementById("dice2").src = `/dice${randNum2}.png`;
   return results
 }
 
@@ -123,7 +125,7 @@ export default function App() {
 
   const onDiceRoll = () => {
     setDiceRolledResult(() => {
-      const rolledResult = rollDice()
+      const rolledResult = rollDice()   
       return rolledResult
     })
   }
@@ -162,7 +164,11 @@ export default function App() {
               >
                 roll dice
               </Button>
-              <Box>result {diceRolledResult}</Box>
+              /* <Box>result {diceRolledResult}</Box> */
+              <Box className="diceImages">
+                <img id="dice1" class="dice" src="/dice6.png" alt="Dice 1"/>
+                <img id="dice2" class="dice" src="/dice6.png" alt="Dice 2"/>                
+              </Box>
               <Dialog
                 open={open}
                 onClose={handleClose}

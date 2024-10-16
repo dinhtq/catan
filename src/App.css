@@ -50,3 +50,14 @@ html {
     #000 0 var(--f)
   );
 }
+
+.diceImages {
+  display: flex;
+  justify-content: center;  /* Aligns dice horizontally (side by side) */
+  align-items: center;       /* Centers the dice vertically */
+  gap: 10px;   
+}
+
+.dice {
+  height: 40px;   
+}
