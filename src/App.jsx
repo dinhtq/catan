@@ -164,7 +164,7 @@ export default function App() {
               >
                 roll dice
               </Button>
-              /* <Box>result {diceRolledResult}</Box> */
+              {/* <Box>result {diceRolledResult}</Box> */}
               <Box className="diceImages">
                 <img id="dice1" class="dice" src="/dice6.png" alt="Dice 1"/>
                 <img id="dice2" class="dice" src="/dice6.png" alt="Dice 2"/>                
