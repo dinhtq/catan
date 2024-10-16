@@ -246,13 +246,26 @@ export default function App() {
         const colKey = `col${colIdx + 1}`
         /*
           // gotta do this for all building placements
-          hex TOP building placement neighbors of cur hex is:
+          TOP HEX building placement neighbors of cur hex is:
             1) cur hex (self)
             2) hex in prev row at curIdx, unless:
                a) first row
                b) row 2, col 4
                c) row 3, col 5
             3) hex in prev row at curIdx - 1, unless
+               a) row 2, col 1
+          TOP LEFT
+            1) cur idx hex(self)
+            2) prev hex at cur idx row, unless
+                a) row 2 and row 3
+          TOP RIGHT
+            
+          BOTTOM HEX
+            1) cur hex
+            2) next row at cur idx, unless;
+                a) last row
+            3) next row at curIdx + 1, unless:
+              a) 
         */
         const prevRowNum = rowKey.slice(rowKey.indexOf('w'))
         console.log('prevRowNumn', prevRowNum)

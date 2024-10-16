@@ -25,6 +25,8 @@ const buildingPlacementStyleMap = {
       top: '18px',
       left: '-40px',
       //border: '1px solid cyan',
+      border: '1px solid grey',
+      borderRadius: '3px',
     }),
   },
   topRight: {
@@ -39,8 +41,8 @@ const buildingPlacementStyleMap = {
       top: '-26px',
       left: '30px',
       //border: '1px solid red',
-      border: '1px solid grey',
-      borderRadius: '3px',
+      //   border: '1px solid grey',
+      //   borderRadius: '3px',
     }),
   },
 
@@ -63,6 +65,8 @@ const buildingPlacementStyleMap = {
       bottom: '-52px',
       left: '31px',
       //border: '1px solid yellow',
+      //   border: '1px solid blue',
+      //   borderRadius: '3px',
     }),
   },
 }
