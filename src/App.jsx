@@ -79,12 +79,15 @@ const getGrid = (pieces) => {
   return grid
 }
 
+let diceRolledTotal = 12
+
 function rollDice() {
   const randNum1 = Math.floor(Math.random() * 6) + 1
   const randNum2 = Math.floor(Math.random() * 6) + 1
   const results = [randNum1, randNum2]
-  document.getElementById("dice1").src = `/dice${randNum1}.png`;
-  document.getElementById("dice2").src = `/dice${randNum2}.png`;
+  diceRolledTotal = randNum1 + randNum2
+  document.getElementById("dice1").src = `/dice${randNum1}.png`
+  document.getElementById("dice2").src = `/dice${randNum2}.png`
   return results
 }
 
